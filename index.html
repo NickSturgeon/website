@@ -1,119 +1,13 @@
-<!doctype html>
-<html lang=en>
-
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="main.css" />
-    <script type="text/javascript" src="bg.js"></script>
-    <script type="text/javascript" src="audio.js"></script>
-    <title>Z64</title>
-</head>
-
-<body>
-    <div>
-        <div class="container text-center" style="margin-top: 50px;">
-            <img src="img/logo.png" style="width: 200px; height: 200px" />
-        </div>
-
-        <h1 class="text-center" style="margin-top: 10px;">Zelda 64 Reverse Engineering</h1>
-
-        <div class="content-container" style="margin-top: 30px;">
-
-            <div class="zelda-file-box">
-                <div class="zelda-file-box-header">
-                    <div class="zelda-box zelda-button zelda-file-box-slot">File 1</div>
-                    <div class="zelda-box zelda-file-box-filename">Join the discussion!
-                        <hr style="border-color: #1c2a49;margin-top: 14px;border-width: 3px;">
-                    </div>
-                </div>
-                <div>
-                    <div class="zelda-box zelda-file-box-hack_left"></div>
-                    <div class="zelda-box zelda-file-box-hack_right"></div>
-                </div>
-                <div class="zelda-file-box-main zelda-box">
-                    <div class="external-link-img">
-                        <a href="https://discord.zelda64.dev/"><img src="img/logo-discord.png" alt="Discord Link" width="24" style="margin-right: 6px;">Discord</a>
-                    </div>
-                </div>
-            </div>
-            <br><br><br>
-            <div class="zelda-file-box">
-                <div class="zelda-file-box-header">
-                    <div class="zelda-box zelda-button zelda-file-box-slot">File 2</div>
-                    <div class="zelda-box zelda-file-box-filename">Development
-                        <hr style="border-color: #1c2a49;margin-top: 14px;border-width: 3px;">
-                    </div>
-                </div>
-                <div>
-                    <div class="zelda-box zelda-file-box-hack_left"></div>
-                    <div class="zelda-box zelda-file-box-hack_right"></div>
-                </div>
-                <div class="zelda-file-box-main zelda-box">
-                    <div class="external-link-img">
-                        <a href="https://github.com/zeldaret/"><img src="img/logo-github.png" alt="GitHub Link" width="24" style="margin-right: 6px;">GitHub</a>
-                    </div>
-                    <div class="external-link-img">
-                        <a href="progress.html"><img src="img/logo-progress.png" alt="Progress Link" width="24" width="24" style="margin-right: 6px;">Progress Page</a>
-                    </div>
-                    <div class="external-link-img">
-                        <a href="https://trello.com/b/qUqnUkWY/ocarina-of-time-decompilation"><img src="img/logo-trello.png" alt="Trello Link" width="24" width="24" style="margin-right: 6px;">OOT Trello</a>
-                    </div>
-                    <div class="external-link-img">
-                        <a href="https://trello.com/b/ruxw9n6m/majoras-mask-decompilation"><img src="img/logo-trello.png" alt="Trello Link" width="24" width="24" style="margin-right: 6px;">MM Trello</a>
-                    </div>
-                </div>
-            </div>
-            <br><br><br>
-            <div class="zelda-file-box">
-                <div class="zelda-file-box-header">
-                    <div class="zelda-box zelda-button zelda-file-box-slot">File 3</div>
-                    <div class="zelda-box zelda-file-box-filename">Resources
-                        <hr style="border-color: #1c2a49;margin-top: 14px;border-width: 3px;">
-                    </div>
-                </div>
-                <div>
-                    <div class="zelda-box zelda-file-box-hack_left"></div>
-                    <div class="zelda-box zelda-file-box-hack_right"></div>
-                </div>
-                <div class="zelda-file-box-main zelda-box">
-                    <h2 style="font-size: 22px;text-decoration: underline;">Decompilation Tools</h2>
-                    <p><b>Main Decompiler:</b></p>
-                    <p><a href="https://github.com/matt-kempster/mips_to_c">mips_to_c</a></p>
-                    <p><a href="https://simonsoftware.se/other/mips_to_c.py">mips_to_c (Online)</a></p>
-                    <p><b>Alternative Decompiler:</b></p>
-                    <p><a href="https://github.com/NationalSecurityAgency/ghidra">Ghidra</a></p>
-                    <p><a href="https://github.com/Random06457/Zelda64Loader">Zelda64Loader (Loader for z64 ROMs)</a></p>
-                    <p><b>Permuter:</b></p>
-                    <p><a href="https://github.com/simonlindholm/decomp-permuter">decomp-permuter</a></p>
-                    <p><b>Floating Point Converter:</b></p>
-                    <p><a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html">FloatConverter</a></p>
-
-                    <h2 style="font-size: 22px;text-decoration: underline;">Decomp Documentation & Guides</h2>
-                    <p><a href="https://hackmd.io/vPmcgdaFSlq4R2mfkq4bJg">IDO O2 Decompilation Notes (IDO 5.3 & 7.1)</a></p>
-                    <p><a href="https://hackmd.io/m3E7g2YaSxiwUv9QKBLYyA">N64 Gfx Decompilation Guide (F3DEX & S2DEX)</a></p>
-                    <p><a href="https://courses.cs.washington.edu/courses/cse410/09sp/examples/MIPSCallingConventionsSummary.pdf">MIPS Calling Conventions</a></p>
-                    <p><a href="https://www.cs.cmu.edu/afs/cs/academic/class/15740-f97/public/doc/mips-isa.pdf">MIPS Instruction Set</a></p>
-
-                    <h2 style="font-size: 22px;text-decoration: underline;">Zelda Documentation</h2>
-                    <p><a href="https://drive.google.com/drive/folders/0B2P7Sh4YYPZuSVRLV1pLSTRkbVk">TCRF #Zelda Sheets</a></p>
-                    <p><a href="https://drive.google.com/drive/folders/1hvEhcaUQvcJ1vUw5QWFTk7_La_ELKD87">TMC Research</a></p>
-                    <p><b>CloudModding Wiki:</b></p>
-                    <p><a href="https://wiki.cloudmodding.com/oot/Main_Page">CloudModding (OOT)</a></p>
-                    <p><a href="https://wiki.cloudmodding.com/mm/Main_Page">CloudModding (MM)</a></p>
-
-                    <h2 style="font-size: 22px;text-decoration: underline;">Project Resources</h2>
-                    <p><a href="https://drive.google.com/drive/folders/1ONmR0gzG3xCUufaNF6ATL2u5p90Cg6Kq">Project Sheets</a></p>
-                    <p><a href="https://zelda64.dev/progress.html">OoT Decomp Progress</a></p>
-
-                    <p><a href="https://docs.google.com/spreadsheets/d/1hiP0JH_rEcq-s8vOnnoNPy2ooXhxl8qas4HItn30-Oc">OoT Debug Source Code Structure</a></p>
-                </div>
-            </div>
-
-            <!--
-            <div class="zelda-box zelda-button" id="toggle_audio_mute" onclick="toggleMute()" style="margin-top: 40px;">Audio: <span style="color:red">Off</span></div>
-            -->
-        </div>
-    </div>
-</body>
-
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zelda RET</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
