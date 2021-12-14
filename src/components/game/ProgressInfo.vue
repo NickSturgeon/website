@@ -67,25 +67,29 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
 </script>
 
 <template>
-  <strong class="key">Last updated</strong>
-  <strong class="value date">{{ lastUpdate }}</strong>
+  <strong class="float-left">Last updated</strong>
+  <strong class="float-right text-cyan-300">{{ lastUpdate }}</strong>
   <br />
 
   <template v-if="totals.length > 0" v-for="(chart, i) in metrics">
-    <hr class="my-2" />
-    <strong class="key">Total {{ Object.keys(totals[i])[0] }}</strong>
+    <hr class="my-2 border border-border" />
+    <strong class="float-left">Total {{ Object.keys(totals[i])[0] }}</strong>
     <template v-for="(total, j) in Object.values(totals[i])[0]">
-      <strong class="value separator" v-if="j > 0">|</strong>
-      <strong class="value" :class="j === 0 ? 'matched' : 'unmatched'"
+      <strong class="float-right ml-4 mr-2" v-if="j > 0">|</strong>
+      <strong
+        class="float-right inline-block text-right w-metricWidth"
+        :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
         >{{ (total * 100).toFixed(2) }}%</strong
       >
     </template>
     <br />
     <template v-for="(metric, key) in chart">
-      <strong class="key">{{ key }}</strong>
+      <strong class="float-left">{{ key }}</strong>
       <template v-for="(val, j) in metric">
-        <strong class="value separator" v-if="j > 0">|</strong>
-        <strong class="value" :class="j === 0 ? 'matched' : 'unmatched'"
+        <strong class="float-right ml-4 mr-2" v-if="j > 0">|</strong>
+        <strong
+          class="float-right inline-block text-right w-metricWidth"
+          :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
           >{{ (val * 100).toFixed(2) }}%</strong
         >
       </template>
@@ -93,44 +97,3 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
     </template>
   </template>
 </template>
-
-<style scoped>
-hr {
-  border-color: #1c2a49;
-  border-width: 1px;
-}
-
-.key {
-  float: left;
-}
-
-.value {
-  float: right;
-}
-
-.separator {
-  margin: 0 0.5em 0 1em;
-}
-
-.metric {
-  min-width: 4em;
-  text-align: right;
-}
-
-.matched {
-  color: #01ce47;
-  display: inline-block;
-  min-width: 7ch;
-  text-align: right;
-}
-
-.unmatched {
-  color: #ffc107;
-  display: inline-block;
-  text-align: right;
-}
-
-.date {
-  color: #00ffff;
-}
-</style>

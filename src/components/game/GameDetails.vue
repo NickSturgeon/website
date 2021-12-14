@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { shallowRef, watchEffect } from "vue";
-import N64Box from "../common/N64Box.vue";
-import ProgressInfo from "./ProgressInfo.vue";
-import ProgressChart from "./ProgressChart.vue";
+import N64Box from "@/components/common/N64Box.vue";
+import ProgressInfo from "@/components/game/ProgressInfo.vue";
+import ProgressChart from "@/components/game/ProgressChart.vue";
 
 const props = defineProps<{ game: Game }>();
 
-const matched = shallowRef<string>();
-const unmatched = shallowRef<string>();
+const matched = shallowRef("");
+const unmatched = shallowRef("");
 
 const showChart = shallowRef(false);
 
@@ -17,7 +17,7 @@ watchEffect(async () => {
   showChart.value = true;
 });
 
-async function updateCSV(game: Game): Promise<[string, string]> {
+async function updateCSV(game: Game): Promise<[matched: string, unmatched: string]> {
   const m = fetch(`/csv/${game.matching}.csv`).then((res) => res.text());
   const um = fetch(`/csv/${game.nonmatching}.csv`).then((res) => res.text());
 
@@ -27,18 +27,22 @@ async function updateCSV(game: Game): Promise<[string, string]> {
 
 <template>
   <n64-box :file="1" heading="Project Progress">
-    <progress-info :game="props.game" :matched="matched!" :unmatched="unmatched!" />
+    <progress-info :game="props.game" :matched="matched" :unmatched="unmatched" />
   </n64-box>
   <template v-for="chart in props.game.charts" :key="props.game.slug + chart.index">
     <n64-box simple>
       <progress-chart
         v-if="showChart"
         :metadata="chart"
-        :matched="matched!"
-        :unmatched="unmatched!"
+        :matched="matched"
+        :unmatched="unmatched"
       />
-      <div style="display: block; background-color: white; height: 400px" v-else>
-        Loading...
+      <div
+        class="text-black text-sm text-center block bg-white h-chartHeight"
+        style="line-height: 400px"
+        v-else
+      >
+        Loading Chart...
       </div>
     </n64-box>
   </template>

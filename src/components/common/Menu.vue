@@ -6,7 +6,7 @@
           <img
             class="aspect-square h-10 inline mr-4 my-2"
             alt="Zelda RET logo"
-            src="../../assets/img/logo.png"
+            src="@/assets/img/logo.png"
           />
           <span class="text-white align-middle text-2xl font-bold mr-12">Zelda RET</span>
         </router-link>
@@ -17,7 +17,7 @@
           <img
             class="aspect-square w-6 inline"
             alt="Discord logo"
-            src="../../assets/img/icons/discord.png"
+            src="@/assets/img/icons/discord.png"
           />
         </a>
       </div>

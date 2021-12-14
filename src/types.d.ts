@@ -18,10 +18,3 @@ declare interface ChartData {
 declare interface KeyNumber {
   [key: string]: number[];
 }
-
-declare interface CustomPointOptionsObject {
-  x: number;
-  y: number;
-  commit: string;
-  metrics: [number, number, number][];
-}

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, shallowRef, defineAsyncComponent, watchEffect, Component } from "vue";
 import { useRouter, useRoute, onBeforeRouteUpdate } from "vue-router";
-import games from "../assets/json/games.json";
-import GameDetails from "../components/game/GameDetails.vue";
-import N64Box from "../components/common/N64Box.vue";
+import games from "@/assets/json/games.json";
+import GameDetails from "@/components/game/GameDetails.vue";
+import N64Box from "@/components/common/N64Box.vue";
 
 const router = useRouter();
 const route = useRoute();

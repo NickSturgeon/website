@@ -3,6 +3,12 @@ import { shallowRef, watchEffect } from "vue";
 import { Chart } from "highcharts-vue";
 import { Options, PointOptionsObject } from "highcharts";
 
+type Metric = [numerator: number, denominator: number, percent: number];
+interface CustomPointOptionsObject extends PointOptionsObject {
+  commit: string;
+  metrics: Metric[];
+}
+
 const props = defineProps<{
   metadata: ChartData;
   matched: string;
@@ -38,7 +44,7 @@ function parseData(data: string, metadata: ChartData): PointOptionsObject[] {
     const y = +columns[i] / +columns[i + 1]; // total percentage
     i += 2;
 
-    const metrics: [number, number, number][] = [];
+    const metrics: Metric[] = [];
     for (const _ in metadata.series.slice(1)) {
       const numerator = +columns[i];
       const denominator = +columns[i + 1];

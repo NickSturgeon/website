@@ -13,7 +13,7 @@ function slugify(s: string) {
     .trim()
     .toLowerCase()
     .replace(/\s+/g, "-") // replace all whitespace with '-'
-    .replace(/[^a-zA-Z\-]/g, "") // remove all non-letter or '-' characters
+    .replace(/[^a-zA-Z0-9\-]/g, "") // remove all non-alphanumeric or '-' characters
     .split("-")
     .filter((x) => x !== "")
     .slice(0, maxNumberOfSlugs)
