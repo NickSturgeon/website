@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef, defineAsyncComponent, watchEffect, Component } from "vue";
+import { ref, shallowRef, defineAsyncComponent, watchEffect } from "vue";
 import { useRouter, useRoute, onBeforeRouteUpdate } from "vue-router";
 import games from "@/assets/json/games.json";
 import GameDetails from "@/components/game/GameDetails.vue";
@@ -32,7 +32,7 @@ watchEffect(() => {
 
   <n64-box class="mt-4" :file="2" heading="FAQ">
     <keep-alive>
-      <faq class="markdown" />
+      <component :is="faq" class="markdown" />
     </keep-alive>
   </n64-box>
 </template>

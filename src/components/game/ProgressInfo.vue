@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef, watchEffect } from "vue";
+import { shallowRef, watchEffect } from "vue";
 
 const props = defineProps<{
   game: Game;
