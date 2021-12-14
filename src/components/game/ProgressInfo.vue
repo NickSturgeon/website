@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { shallowRef, watchEffect } from "vue";
 
+interface KeyNumber {
+  [key: string]: number[];
+}
+
 const props = defineProps<{
   game: Game;
   matched: string;

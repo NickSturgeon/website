@@ -14,7 +14,3 @@ declare interface ChartData {
   index: number;
   series: { metric: string; description: string }[];
 }
-
-declare interface KeyNumber {
-  [key: string]: number[];
-}
