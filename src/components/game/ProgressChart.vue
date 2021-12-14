@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, Ref, onUpdated } from "vue";
+import { shallowRef, watchEffect } from "vue";
 import { Chart } from "highcharts-vue";
 import { Options, PointOptionsObject } from "highcharts";
-import { ChartData, CustomPointOptionsObject } from "../../env";
 
 const props = defineProps<{
   metadata: ChartData;
@@ -10,34 +9,24 @@ const props = defineProps<{
   unmatched: string;
 }>();
 
-// --- SETUP ---
-const metadata = ref(props.metadata);
-const matchedData = ref(parseData(props.matched));
-const unmatchedData = ref(parseData(props.unmatched));
+const options = shallowRef<Options>();
 
-const interval = 1 / 5;
-let joined = Array.prototype
-  .concat(matchedData.value, unmatchedData.value)
-  .sort((a, b) => a["y"] - b["y"]);
-let max = Math.max(interval, Math.ceil(joined.slice(-1)[0].y / interval) * interval);
-
-const opt: Ref<Options> = ref(getOptions());
-
-// --- LIFECYCLE ---
-onUpdated(() => {
-  metadata.value = props.metadata;
-  matchedData.value = parseData(props.matched);
-  unmatchedData.value = parseData(props.unmatched);
-  joined = Array.prototype
-    .concat(matchedData, unmatchedData)
-    .sort((a, b) => a["y"] - b["y"]);
-  max = Math.max(interval, Math.ceil(joined.slice(-1)[0].y / interval) * interval);
-  opt.value = getOptions();
+watchEffect(() => {
+  const matchedData = parseData(props.matched, props.metadata);
+  const unmatchedData = parseData(props.unmatched, props.metadata);
+  options.value = getOptions(matchedData, unmatchedData, props.metadata);
 });
 
-// --- FUNCTIONS ---
-function parseData(data: string): PointOptionsObject[] {
-  const seriesData = [];
+function max(matched: PointOptionsObject[], unmatched: PointOptionsObject[]): number {
+  const interval = 1 / 5;
+  const joined = Array.prototype
+    .concat(matched, unmatched)
+    .sort((a, b) => a["y"] - b["y"]);
+  return Math.max(interval, Math.ceil(joined.slice(-1)[0].y / interval) * interval);
+}
+
+function parseData(data: string, metadata: ChartData): PointOptionsObject[] {
+  const seriesData: CustomPointOptionsObject[] = [];
 
   for (const line of data.split("\n").filter((line) => line != "")) {
     const columns = line.split(",");
@@ -45,12 +34,12 @@ function parseData(data: string): PointOptionsObject[] {
     const x = +columns[1] * 1000; // timestamp
     const commit = columns[2];
 
-    let i = metadata.value.index;
+    let i = metadata.index;
     const y = +columns[i] / +columns[i + 1]; // total percentage
     i += 2;
 
-    const metrics = [];
-    for (const _ in metadata.value.series.slice(1)) {
+    const metrics: [number, number, number][] = [];
+    for (const _ in metadata.series.slice(1)) {
       const numerator = +columns[i];
       const denominator = +columns[i + 1];
       const percent = numerator / denominator;
@@ -70,11 +59,15 @@ function parseData(data: string): PointOptionsObject[] {
   return seriesData;
 }
 
-function getOptions(): Options {
+function getOptions(
+  matched: PointOptionsObject[],
+  unmatched: PointOptionsObject[],
+  metadata: ChartData
+): Options {
   return {
     chart: { type: "line" },
-    title: { text: metadata.value.title },
-    subtitle: { text: metadata.value.subtitle },
+    title: { text: metadata.title },
+    subtitle: { text: metadata.subtitle },
     tooltip: {
       formatter: function () {
         const opt = this.point.options! as CustomPointOptionsObject;
@@ -82,13 +75,13 @@ function getOptions(): Options {
 
         tooltip += `Date: ${new Date(opt.x!).toLocaleString()}<br/>\n`;
         tooltip += `Commit: ${opt.commit}<br/>\n`;
-        tooltip += `Total ${metadata.value.series[0].metric}: ${(opt.y! * 100).toFixed(
+        tooltip += `Total ${metadata.series[0].metric}: ${(opt.y! * 100).toFixed(
           2
         )}%<br/>\n`;
         tooltip += `-------------------------------------------<br/>\n`;
 
-        for (let i = 0; i < metadata.value.series.length - 1; i += 1) {
-          const text = metadata.value.series[i + 1].description
+        for (let i = 0; i < metadata.series.length - 1; i += 1) {
+          const text = metadata.series[i + 1].description
             .replace("{0}", opt.metrics[i][0].toString())
             .replace("{1}", opt.metrics[i][1].toString())
             .replace("{2}", (+opt.metrics[i][2] * 100).toFixed(2));
@@ -109,19 +102,19 @@ function getOptions(): Options {
           return `${(+this.value * 100).toFixed(2)}%`;
         },
       },
-      max: max,
+      max: max(matched, unmatched),
     },
     series: [
       {
         type: "line",
         name: "Non-matched",
-        data: unmatchedData.value,
+        data: unmatched,
         color: "#ffc107",
       },
       {
         type: "line",
         name: "Matched",
-        data: matchedData.value,
+        data: matched,
         color: "#01ce47",
       },
     ],
@@ -130,5 +123,5 @@ function getOptions(): Options {
 </script>
 
 <template>
-  <chart :options="opt"></chart>
+  <chart :options="options"></chart>
 </template>

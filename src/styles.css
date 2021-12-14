@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --border-width: 6px;
+  --color-bg: #2f487c;
+  --color-bg-hl: #3f67cd;
+  --color-bd: #1c2a49;
+  --color-bd-hl: #5f87dd;
+  --font-size-heading: 22px;
+  --font-size-content: 18px;
+  --slot-size: 105px;
+}
+
+@layer base {
+  body {
+    @apply bg-purple;
+  }
+
+  h1 {
+    @apply font-bold text-2xl;
+  }
+
+  h2 {
+    @apply font-bold text-xl;
+  }
+
+  h3 {
+    @apply font-bold text-lg;
+  }
+
+  a:not(.nav-link) {
+    @apply font-semibold underline;
+  }
+}
+
+@layer components {
+  .markdown {
+    @apply text-white;
+
+    h1 {
+      @apply mt-8;
+    }
+
+    h2 {
+      @apply mt-4;
+    }
+
+    h3 {
+      @apply mt-3;
+    }
+
+    a {
+      @apply text-gold;
+    }
+
+    nav a {
+      @apply text-sm;
+    }
+
+    code {
+      @apply font-mono text-sm bg-black bg-opacity-60 text-white py-1 px-2 rounded-md whitespace-nowrap;
+    }
+
+    ol,
+    ul {
+      @apply pl-5;
+    }
+
+    li {
+      @apply list-outside list-disc;
+    }
+  }
+
+  section.n64-box {
+    background: linear-gradient(
+      120deg,
+      var(--color-bg) 10%,
+      var(--color-bg-hl) 30%,
+      var(--color-bg-hl) 40%,
+      var(--color-bg) 60%,
+      var(--color-bg-hl) 80%,
+      var(--color-bg)
+    );
+
+    .box {
+      border-color: var(--color-bd-hl) var(--color-bd) var(--color-bd) var(--color-bd-hl);
+      border-width: var(--border-width);
+    }
+
+    header {
+      @apply flex w-full;
+
+      .slot {
+        background: linear-gradient(
+          90deg,
+          var(--color-bg),
+          var(--color-bg-hl) 30%,
+          var(--color-bg) 80%,
+          var(--color-bg-hl)
+        );
+        text-shadow: 2px 2px 2px var(--color-bd-hl);
+      }
+
+      hr {
+        border-color: var(--color-bd);
+        @apply border-2 mt-2;
+      }
+    }
+
+    .hack-slot {
+      border-color: var(--color-bd-hl) var(--color-bd) var(--color-bd) var(--color-bd-hl);
+    }
+
+    .hack-heading {
+      border-color: var(--color-bd-hl) var(--color-bd) var(--color-bd) var(--color-bd-hl);
+      height: var(--border-width);
+    }
+
+    article {
+      font-size: var(--font-size-content);
+
+      &:first-child {
+        @apply border-t-solid;
+      }
+    }
+  }
+}
+
+@layer utilities {
+  .border-t-none {
+    border-top-style: none;
+  }
+
+  .border-l-none {
+    border-left-style: none;
+  }
+
+  .border-r-none {
+    border-right-style: none;
+  }
+
+  .border-b-none {
+    border-bottom-style: none;
+  }
+
+  .border-t-solid {
+    border-top-style: solid;
+  }
+
+  .border-l-solid {
+    border-left-style: solid;
+  }
+
+  .border-r-solid {
+    border-right-style: solid;
+  }
+
+  .border-b-solid {
+    border-bottom-style: solid;
+  }
+
+  .bg-zelda {
+    transform: translatez(0);
+    -webkit-transform: translatez(0);
+  }
+}

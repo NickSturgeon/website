@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { Game } from "../../env";
-import _404Vue from "../../views/_404.vue";
+import { ref, shallowRef, watchEffect } from "vue";
 
 const props = defineProps<{
   game: Game;
@@ -9,52 +7,62 @@ const props = defineProps<{
   unmatched: string;
 }>();
 
-// --- SETUP ---
-const totals = ref<{ [key: string]: number[] }[]>([]);
-const metrics = ref<{ [key: string]: number[] }[]>([]);
-const lastUpdate = ref<string>();
+const game = shallowRef<Game>();
 
-parseData();
+const totals = shallowRef<KeyNumber[]>([]);
+const metrics = shallowRef<KeyNumber[]>([]);
+const lastUpdate = shallowRef("");
 
-// --- FUNCTIONS ---
-function parseData(): void {
+watchEffect(async () => {
+  game.value = props.game;
   totals.value = [];
   metrics.value = [];
+  [totals.value, metrics.value] = await parseData();
+});
 
-  for (const _ of props.game.charts) {
-    metrics.value.push({});
-  }
+async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
+  return new Promise((resolve, _) => {
+    const t: KeyNumber[] = [];
+    const m: KeyNumber[] = [];
+    lastUpdate.value = "";
 
-  for (const data of [props.matched, props.unmatched]) {
-    const points = data.split("\n").filter((line) => line != "");
-    const latestPoint = points[points.length - 1];
-    const column = latestPoint.split(",");
-
-    if (lastUpdate.value === undefined) {
-      lastUpdate.value = new Date(+column[1] * 1000).toLocaleString();
+    for (const _ of game.value!.charts) {
+      m.push({});
     }
 
-    for (const chart of props.game.charts) {
-      totals.value.push({ [chart.series[0].metric]: [] });
-    }
+    for (const data of [props.matched, props.unmatched]) {
+      const points = data.split("\n").filter((line) => line != "");
+      const latestPoint = points[points.length - 1];
+      const column = latestPoint.split(",");
 
-    let c = 0;
-    for (const chart of props.game.charts) {
-      let i = chart.index;
-      totals.value[c][chart.series[0].metric].push(+column[i] / +column[i + 1]);
-      i += 2;
-
-      for (const serie of chart.series.slice(1)) {
-        if (!(serie.metric in metrics.value[c])) {
-          metrics.value[c][serie.metric] = [];
-        }
-        metrics.value[c][serie.metric].push(+column[i] / +column[i + 1]);
-        i += 2;
+      if (lastUpdate.value === "") {
+        lastUpdate.value = new Date(+column[1] * 1000).toLocaleString();
       }
 
-      c += 1;
+      for (const chart of game.value!.charts) {
+        t.push({ [chart.series[0].metric]: [] });
+      }
+
+      let c = 0;
+      for (const chart of game.value!.charts) {
+        let i = chart.index;
+        t[c][chart.series[0].metric].push(+column[i] / +column[i + 1]);
+        i += 2;
+
+        for (const serie of chart.series.slice(1)) {
+          if (!(serie.metric in m[c])) {
+            m[c][serie.metric] = [];
+          }
+          m[c][serie.metric].push(+column[i] / +column[i + 1]);
+          i += 2;
+        }
+
+        c += 1;
+      }
     }
-  }
+
+    resolve([t, m]);
+  });
 }
 </script>
 
@@ -63,7 +71,7 @@ function parseData(): void {
   <strong class="value date">{{ lastUpdate }}</strong>
   <br />
 
-  <template v-for="(chart, i) in metrics">
+  <template v-if="totals.length > 0" v-for="(chart, i) in metrics">
     <hr class="my-2" />
     <strong class="key">Total {{ Object.keys(totals[i])[0] }}</strong>
     <template v-for="(total, j) in Object.values(totals[i])[0]">
@@ -101,7 +109,7 @@ hr {
 }
 
 .separator {
-  margin: 0 0.5em;
+  margin: 0 0.5em 0 1em;
 }
 
 .metric {
@@ -111,10 +119,15 @@ hr {
 
 .matched {
   color: #01ce47;
+  display: inline-block;
+  min-width: 7ch;
+  text-align: right;
 }
 
 .unmatched {
   color: #ffc107;
+  display: inline-block;
+  text-align: right;
 }
 
 .date {

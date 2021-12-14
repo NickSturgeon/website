@@ -1,20 +1,20 @@
 <script setup lang="ts">
-const props = defineProps({
-  simple: Boolean,
-  file: { type: Number, required: false },
-  heading: { type: String, required: false },
-});
+const props = defineProps<{
+  simple?: boolean;
+  file?: number;
+  heading?: string;
+}>();
 </script>
 
 <template>
   <section class="n64-box max-w-3xl m-auto box-border text-white relative">
     <template v-if="!props.simple">
       <header>
-        <div class="box slot text-center cursor-default text-black p-3 text-2xl w-28">
+        <div class="box slot text-center text-2xl cursor-default text-black p-3 w-28">
           File {{ props.file }}
         </div>
         <div
-          class="box border-r-solid border-l-solid border-t-solid p-3 w-auto h-10 flex-grow box-content border-b-none text-2xl rounded-b-none"
+          class="box border-r-solid border-l-solid border-t-solid border-b-none p-3 w-auto h-10 flex-grow box-content text-2xl rounded-b-none"
         >
           {{ props.heading }}
           <hr />

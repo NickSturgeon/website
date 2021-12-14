@@ -1,0 +1,27 @@
+declare interface Game {
+  slug: string;
+  title: string;
+  faq: string;
+  links: { [type: string]: string };
+  matching: string;
+  nonmatching: string;
+  charts: ChartData[];
+}
+
+declare interface ChartData {
+  title: string;
+  subtitle: string;
+  index: number;
+  series: { metric: string; description: string }[];
+}
+
+declare interface KeyNumber {
+  [key: string]: number[];
+}
+
+declare interface CustomPointOptionsObject {
+  x: number;
+  y: number;
+  commit: string;
+  metrics: [number, number, number][];
+}

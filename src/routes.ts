@@ -1,6 +1,5 @@
 import Home from "./views/Home.vue";
 import Game from "./views/Game.vue";
-import _404 from "./views/_404.vue";
 
 export const routes = [
   {
@@ -17,8 +16,8 @@ export const routes = [
       title: "Game",
     },
   },
-  {
-    path: "/:path(.*)",
-    component: _404,
-  },
+  //   {
+  //     path: "/:path(.*)",
+  //     component: _404,
+  //   },
 ];
