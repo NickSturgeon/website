@@ -42,7 +42,9 @@ async function updateCSV(game: Game): Promise<[matched: string, unmatched: strin
         style="line-height: 400px"
         v-else
       >
-        Loading Chart...
+        <p class="animate-pulse">
+          <span class="inline-block animate-spin mr-4">:</span>Loading Chart...
+        </p>
       </div>
     </n64-box>
   </template>
