@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref, shallowRef, defineAsyncComponent, watchEffect } from "vue";
 import { useRouter, useRoute, onBeforeRouteUpdate } from "vue-router";
-import games from "@/assets/json/games.json";
 import GameDetails from "@/components/game/GameDetails.vue";
 import N64Box from "@/components/common/N64Box.vue";
+
+import games from "../assets/json/games.json";
 
 const router = useRouter();
 const route = useRoute();
 
 const slug = ref(route.params.slug);
-const getGame = () => games.find((g) => g.slug === slug.value);
 
 const game = shallowRef<Game>();
 const faq = shallowRef();
@@ -19,7 +19,7 @@ onBeforeRouteUpdate((to) => {
 });
 
 watchEffect(() => {
-  game.value = getGame();
+  game.value = games.find((g) => g.slug === slug.value);
   if (game.value === undefined) router.replace("/");
   faq.value = defineAsyncComponent(() => import(`../assets/faq/${game.value!.faq}.md`));
 });

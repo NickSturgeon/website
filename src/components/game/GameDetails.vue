@@ -20,7 +20,6 @@ watchEffect(async () => {
 async function updateCSV(game: Game): Promise<[matched: string, unmatched: string]> {
   const m = fetch(`/csv/${game.matching}.csv`).then((res) => res.text());
   const um = fetch(`/csv/${game.nonmatching}.csv`).then((res) => res.text());
-
   return Promise.all([m, um]);
 }
 </script>
@@ -33,18 +32,17 @@ async function updateCSV(game: Game): Promise<[matched: string, unmatched: strin
     <n64-box simple>
       <progress-chart
         v-if="showChart"
+        class="rounded-sm"
         :metadata="chart"
         :matched="matched"
         :unmatched="unmatched"
       />
       <div
-        class="text-black text-sm text-center block bg-white h-chartHeight"
-        style="line-height: 400px"
         v-else
+        class="text-sm text-center block text-black bg-white h-chartHeight"
+        style="line-height: 400px"
       >
-        <p class="animate-pulse">
-          <span class="inline-block animate-spin mr-4">:</span>Loading Chart...
-        </p>
+        <p class="animate-pulse">Loading Chart...</p>
       </div>
     </n64-box>
   </template>

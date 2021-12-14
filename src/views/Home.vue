@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import games from "@/assets/json/games.json";
+import games from "../assets/json/games.json";
 </script>
 
 <template>
