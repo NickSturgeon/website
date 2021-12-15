@@ -4,10 +4,12 @@
 
 :root {
   --border-width: 6px;
-  --color-bg: #2f487c;
-  --color-bg-hl: #3f67cd;
-  --color-bd: #1c2a49;
-  --color-bd-hl: #5f87dd;
+  --color-bg: rgba(47, 72, 124, 0.4);
+  --color-bg-tr: rgba(47, 72, 124, 0.2);
+  --color-bg-hl: rgba(63, 103, 205, 0.6);
+  --color-bg-hl-tr: rgba(63, 103, 205, 0.6);
+  --color-bd: rgb(28, 42, 73);
+  --color-bd-hl: rgb(95, 135, 221);
   --font-size-heading: 22px;
   --font-size-content: 18px;
   --slot-size: 105px;
@@ -91,8 +93,8 @@
       var(--color-bg-hl) 30%,
       var(--color-bg-hl) 40%,
       var(--color-bg) 60%,
-      var(--color-bg-hl) 80%,
-      var(--color-bg)
+      var(--color-bg-hl-tr) 80%,
+      var(--color-bg-tr)
     );
 
     .box {
@@ -106,12 +108,11 @@
       .slot {
         background: linear-gradient(
           90deg,
-          var(--color-bg),
-          var(--color-bg-hl) 30%,
-          var(--color-bg) 80%,
-          var(--color-bg-hl)
+          var(--color-bg-hl-tr) 0%,
+          var(--color-bg-tr) 80%,
+          var(--color-bg-hl-tr)
         );
-        text-shadow: 2px 2px 2px var(--color-bd-hl);
+        text-shadow: 2px 1px 5px var(--color-bd-hl);
       }
 
       hr {

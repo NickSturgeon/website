@@ -39,7 +39,7 @@ async function updateCSV(game: Game): Promise<[matched: string, unmatched: strin
       />
       <div
         v-else
-        class="text-sm text-center block text-black bg-white h-chartHeight"
+        class="text-sm rounded-sm text-center block text-black bg-white h-chartHeight"
         style="line-height: 400px"
       >
         <p class="animate-pulse">Loading Chart...</p>

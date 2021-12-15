@@ -12,7 +12,8 @@ module.exports = {
         metricWidth: "7ch",
       },
       backgroundImage: {
-        zelda: "url('./src/assets/img/background.png')",
+        oot: "url('./src/assets/img/bg-oot.png')",
+        mm: "url('./src/assets/img/bg-mm.png')",
       },
     },
   },

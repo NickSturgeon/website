@@ -115,13 +115,13 @@ function getOptions(
         type: "line",
         name: "Non-matched",
         data: unmatched,
-        color: "#ffc107",
+        color: "rgb(250, 204, 21)",
       },
       {
         type: "line",
         name: "Matched",
         data: matched,
-        color: "#01ce47",
+        color: "rgb(74, 222, 128)",
       },
     ],
   };

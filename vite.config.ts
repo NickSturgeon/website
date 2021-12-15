@@ -5,12 +5,7 @@ import markdown from "vite-plugin-md";
 import anchor from "markdown-it-anchor";
 import toc from "markdown-it-toc-done-right";
 
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "./tailwind.config.js";
-
 import { slugify } from "./src/utilities";
-
-const styles = resolveConfig(tailwindConfig);
 
 // https://vitejs.dev/config/
 export default defineConfig({

@@ -26,13 +26,13 @@ watchEffect(() => {
 </script>
 
 <template>
-  <h1 class="text-white text-4xl my-5 text-center">{{ game?.title }}</h1>
+  <div>
+    <h1 class="text-white text-4xl my-5 text-center">{{ game?.title }}</h1>
 
-  <game-details :game="game!" />
+    <game-details :game="game!" />
 
-  <n64-box class="mt-4" :file="2" heading="FAQ">
-    <keep-alive>
-      <component :is="faq" class="markdown" />
-    </keep-alive>
-  </n64-box>
+    <n64-box class="mt-4" :file="2" heading="FAQ">
+      <faq class="markdown" />
+    </n64-box>
+  </div>
 </template>

@@ -10,7 +10,9 @@ const props = defineProps<{
   <section class="n64-box max-w-3xl m-auto box-border text-white relative">
     <template v-if="!props.simple">
       <header>
-        <div class="box slot text-center text-2xl cursor-default text-black p-3 w-28">
+        <div
+          class="box slot text-center text-2xl font-semibold cursor-default text-slate-900 p-3 w-28"
+        >
           File {{ props.file }}
         </div>
         <div

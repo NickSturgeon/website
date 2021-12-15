@@ -37,7 +37,9 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
     for (const data of [props.matched, props.unmatched]) {
       const points = data.split("\n").filter((line) => line != "");
       const latestPoint = points[points.length - 1];
-      const column = latestPoint.split(",");
+      const column = latestPoint?.split(",");
+
+      if (column === undefined) continue;
 
       if (lastUpdate.value === "") {
         lastUpdate.value = new Date(+column[1] * 1000).toLocaleString();
