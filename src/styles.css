@@ -17,7 +17,7 @@
 
 @layer base {
   body {
-    @apply bg-purple;
+    @apply bg-purple overflow-x-hidden;
   }
 
   * {

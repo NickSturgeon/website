@@ -2,7 +2,7 @@
 import { shallowRef, watchEffect } from "vue";
 
 interface KeyNumber {
-  [key: string]: number[];
+  [key: string]: (number | undefined)[];
 }
 
 const props = defineProps<{
@@ -26,12 +26,12 @@ watchEffect(async () => {
 
 async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
   return new Promise((resolve, _) => {
-    const t: KeyNumber[] = [];
-    const m: KeyNumber[] = [];
+    const totals: KeyNumber[] = [];
+    const metrics: KeyNumber[] = [];
     lastUpdate.value = "";
 
     for (const _ of game.value!.charts) {
-      m.push({});
+      metrics.push({});
     }
 
     for (const data of [props.matched, props.unmatched]) {
@@ -39,27 +39,28 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
       const latestPoint = points[points.length - 1];
       const column = latestPoint?.split(",");
 
-      if (column === undefined) continue;
-
-      if (lastUpdate.value === "") {
+      if (column === undefined) {
+        lastUpdate.value = "Loading...";
+      } else if (lastUpdate.value === "") {
         lastUpdate.value = new Date(+column[1] * 1000).toLocaleString();
       }
 
       for (const chart of game.value!.charts) {
-        t.push({ [chart.series[0].metric]: [] });
+        totals.push({ [chart.series[0].metric]: [] });
       }
 
       let c = 0;
       for (const chart of game.value!.charts) {
         let i = chart.index;
-        t[c][chart.series[0].metric].push(+column[i] / +column[i + 1]);
+        const total = column === undefined ? undefined : +column[i] / +column[i + 1];
+        totals[c][chart.series[0].metric].push(total);
         i += 2;
 
         for (const serie of chart.series.slice(1)) {
-          if (!(serie.metric in m[c])) {
-            m[c][serie.metric] = [];
+          if (!(serie.metric in metrics[c])) {
+            metrics[c][serie.metric] = [];
           }
-          m[c][serie.metric].push(+column[i] / +column[i + 1]);
+          metrics[c][serie.metric].push(total);
           i += 2;
         }
 
@@ -67,7 +68,7 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
       }
     }
 
-    resolve([t, m]);
+    resolve([totals, metrics]);
   });
 }
 </script>
@@ -77,7 +78,7 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
   <strong class="float-right text-cyan-300">{{ lastUpdate }}</strong>
   <br />
 
-  <template v-if="totals.length > 0" v-for="(chart, i) in metrics">
+  <template v-for="(chart, i) in metrics">
     <hr class="my-2 border border-border" />
     <strong class="float-left">Total {{ Object.keys(totals[i])[0] }}</strong>
     <template v-for="(total, j) in Object.values(totals[i])[0]">
@@ -85,8 +86,10 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
       <strong
         class="float-right inline-block text-right w-metricWidth"
         :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
-        >{{ (total * 100).toFixed(2) }}%</strong
       >
+        <span v-if="total === undefined">&mdash;&emsp;&percnt;</span>
+        <div v-else>{{ (total * 100).toFixed(2) }}%</div>
+      </strong>
     </template>
     <br />
     <template v-for="(metric, key) in chart">
@@ -96,7 +99,9 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
         <strong
           class="float-right inline-block text-right w-metricWidth"
           :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
-          >{{ (val * 100).toFixed(2) }}%</strong
+        >
+          <span v-if="val === undefined">&mdash;&emsp;&percnt;</span>
+          <span v-else>{{ (val * 100).toFixed(2) }}%</span></strong
         >
       </template>
       <br />
