@@ -81,7 +81,16 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
 
   <template v-for="(chart, i) in metrics">
     <hr class="my-2 border border-border" />
-    <strong class="float-left">Total {{ Object.keys(totals[i])[0] }}</strong>
+    <strong class="float-left underline">{{ Object.keys(totals[i])[0] }}</strong>
+    <strong class="float-right inline-block text-right w-28 underline text-green-400">
+      Matched
+    </strong>
+    <strong class="float-right inline-block text-right underline text-yellow-400">
+      Unmatched
+    </strong>
+    <br />
+
+    <strong class="float-left">Total</strong>
     <template v-for="(total, j) in Object.values(totals[i])[0]">
       <strong
         class="float-right inline-block text-right w-28"
