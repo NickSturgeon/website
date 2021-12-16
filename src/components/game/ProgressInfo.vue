@@ -57,6 +57,7 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
         i += 2;
 
         for (const serie of chart.series.slice(1)) {
+          const total = column === undefined ? undefined : +column[i] / +column[i + 1];
           if (!(serie.metric in metrics[c])) {
             metrics[c][serie.metric] = [];
           }
