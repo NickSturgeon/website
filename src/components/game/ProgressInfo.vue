@@ -83,9 +83,8 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
     <hr class="my-2 border border-border" />
     <strong class="float-left">Total {{ Object.keys(totals[i])[0] }}</strong>
     <template v-for="(total, j) in Object.values(totals[i])[0]">
-      <strong class="float-right ml-4 mr-2" v-if="j > 0">|</strong>
       <strong
-        class="float-right inline-block text-right w-metricWidth"
+        class="float-right inline-block text-right w-28"
         :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
       >
         <span v-if="total === undefined">&mdash;&emsp;&percnt;</span>
@@ -94,15 +93,14 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
     </template>
     <br />
     <template v-for="(metric, key) in chart">
-      <strong class="float-left">{{ key }}</strong>
+      <span class="float-left">{{ key }}</span>
       <template v-for="(val, j) in metric">
-        <strong class="float-right ml-4 mr-2" v-if="j > 0">|</strong>
-        <strong
-          class="float-right inline-block text-right w-metricWidth"
+        <span
+          class="float-right inline-block text-right w-28"
           :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
         >
           <span v-if="val === undefined">&mdash;&emsp;&percnt;</span>
-          <span v-else>{{ (val * 100).toFixed(2) }}%</span></strong
+          <span v-else>{{ (val * 100).toFixed(2) }}%</span></span
         >
       </template>
       <br />
