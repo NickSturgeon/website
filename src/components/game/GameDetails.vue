@@ -13,7 +13,7 @@ const showChart = shallowRef(false);
 
 watchEffect(async () => {
   showChart.value = false;
-  [matched.value, unmatched.value] = ["", ""];
+  // [matched.value, unmatched.value] = ["", ""]; // Uncomment to show blank values between loads
   [matched.value, unmatched.value] = await updateCSV(props.game);
   showChart.value = true;
 });
