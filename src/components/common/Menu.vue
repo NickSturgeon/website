@@ -6,8 +6,8 @@ import games from "../../assets/json/games.json";
 </script>
 
 <template>
-  <div class="w-screen h-14 bg-black bg-opacity-20">
-    <div class="flex justify-center">
+  <div class="w-full h-14 bg-black bg-opacity-20">
+    <div class="flex justify-center items-center">
       <div class="px-4">
         <router-link to="/" class="nav-link">
           <img
@@ -19,7 +19,7 @@ import games from "../../assets/json/games.json";
         </router-link>
         <menu-dropdown as="div" class="relative inline-block">
           <menu-button
-            class="inline-flex items-center justify-center w-full text-white align-sub text-lg bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md px-4 py-1"
+            class="inline-flex items-center justify-center w-full text-white text-lg bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md px-4 py-1"
           >
             Games
             <ChevronDownIcon

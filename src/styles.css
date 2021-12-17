@@ -16,22 +16,14 @@
 }
 
 @layer base {
-  body {
-    @apply bg-purple;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
   html,
   body {
-    @apply h-full overflow-x-hidden;
+    margin: 0;
+    padding: 0;
   }
 
   body {
-    position: static;
-    margin: 0;
+    @apply bg-purple h-full;
   }
 
   h1 {
@@ -117,7 +109,7 @@
     }
 
     header {
-      @apply flex w-full;
+      @apply flex;
 
       .slot {
         background: linear-gradient(
