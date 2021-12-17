@@ -75,37 +75,39 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
 </script>
 
 <template>
-  <strong class="float-left">Last updated</strong>
-  <strong class="float-right text-cyan-300">{{ lastUpdate }}</strong>
+  <span class="float-left font-bold">Last updated</span>
+  <span class="float-right text-cyan-300 font-bold">{{ lastUpdate }}</span>
   <br />
 
   <template v-for="(chart, i) in metrics">
     <hr class="my-2 border border-border" />
-    <strong class="float-left underline">{{ Object.keys(totals[i])[0] }}</strong>
-    <strong class="float-right inline-block text-right w-28 underline text-green-400">
+    <span class="float-left underline font-bold">{{ Object.keys(totals[i])[0] }}</span>
+    <span
+      class="float-right inline-block text-right font-bold w-28 underline text-green-400"
+    >
       Matched
-    </strong>
-    <strong class="float-right inline-block text-right underline text-yellow-400">
+    </span>
+    <span class="float-right inline-block text-right font-bold underline text-yellow-400">
       Unmatched
-    </strong>
+    </span>
     <br />
 
-    <strong class="float-left">Total</strong>
+    <span class="float-left font-bold">Total</span>
     <template v-for="(total, j) in Object.values(totals[i])[0]">
-      <strong
-        class="float-right inline-block text-right w-28"
+      <span
+        class="float-right inline-block text-right w-28 font-bold"
         :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
       >
         <span v-if="total === undefined">&mdash;&emsp;&percnt;</span>
         <div v-else>{{ (total * 100).toFixed(2) }}%</div>
-      </strong>
+      </span>
     </template>
     <br />
     <template v-for="(metric, key) in chart">
-      <span class="float-left">{{ key }}</span>
+      <span class="float-left font-semibold">{{ key }}</span>
       <template v-for="(val, j) in metric">
         <span
-          class="float-right inline-block text-right w-28"
+          class="float-right inline-block text-right w-28 font-semibold"
           :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
         >
           <span v-if="val === undefined">&mdash;&emsp;&percnt;</span>

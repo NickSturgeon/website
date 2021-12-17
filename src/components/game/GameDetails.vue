@@ -31,22 +31,24 @@ async function updateCSV(game: Game): Promise<[matched: string, unmatched: strin
   </n64-box>
   <template v-for="chart in game.charts" :key="game.slug + chart.index">
     <n64-box simple>
-      <transition name="fade-chart">
-        <progress-chart
-          v-if="showChart"
-          class="rounded-sm"
-          :metadata="chart"
-          :matched="matched"
-          :unmatched="unmatched"
-        />
-        <div
-          v-else
-          class="text-sm rounded-sm text-center block text-black bg-white h-chartHeight"
-          style="line-height: 400px"
-        >
-          <p class="animate-pulse">Loading...</p>
-        </div>
-      </transition>
+      <div class="rounded-sm bg-white h-chartHeight block relative">
+        <transition name="fade-chart">
+          <progress-chart
+            v-if="showChart"
+            class="rounded-sm absolute inset-0"
+            :metadata="chart"
+            :matched="matched"
+            :unmatched="unmatched"
+          />
+          <div
+            v-else
+            class="text-sm text-center inset-0 text-black"
+            style="line-height: 400px"
+          >
+            <p class="animate-pulse">Loading...</p>
+          </div>
+        </transition>
+      </div>
     </n64-box>
   </template>
 </template>
@@ -54,7 +56,7 @@ async function updateCSV(game: Game): Promise<[matched: string, unmatched: strin
 <style>
 .fade-chart-enter-active,
 .fade-chart-leave-active {
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.2s ease-in;
 }
 
 .fade-chart-enter-from,
