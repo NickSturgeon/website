@@ -13,7 +13,7 @@ const props = defineProps<{
     <template v-if="!props.simple">
       <header>
         <div
-          class="box slot text-left pl-5 text-2xl relative font-semibold cursor-default text-slate-900 p-3 w-32"
+          class="box slot text-right pr-9 text-2xl relative font-semibold cursor-default text-slate-900 p-3 w-32"
         >
           File {{ props.file }}
           <img class="absolute h-12 -right-10 bottom-1.5" :src="linker" />
