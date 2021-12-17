@@ -1,27 +1,39 @@
 <script setup lang="ts">
-import { shallowRef, watchEffect } from "vue";
+import { shallowRef, onBeforeMount, onUpdated } from "vue";
+import { useStore } from "../../store";
 import N64Box from "@/components/common/N64Box.vue";
 import ProgressInfo from "@/components/game/ProgressInfo.vue";
 import ProgressChart from "@/components/game/ProgressChart.vue";
 
 const props = defineProps<{ game: Game }>();
+const store = useStore();
 
 const matched = shallowRef("");
 const unmatched = shallowRef("");
 
 const showChart = shallowRef(false);
 
-watchEffect(async () => {
-  showChart.value = false;
-  // [matched.value, unmatched.value] = ["", ""]; // Uncomment to show blank values between loads
-  [matched.value, unmatched.value] = await updateCSV(props.game);
+onBeforeMount(async () => {
+  [matched.value, unmatched.value] = await updateCSV([
+    props.game.matching,
+    props.game.nonmatching,
+  ]);
   showChart.value = true;
 });
 
-async function updateCSV(game: Game): Promise<[matched: string, unmatched: string]> {
-  const m = fetch(`/csv/${game.matching}.csv`).then((res) => res.text());
-  const um = fetch(`/csv/${game.nonmatching}.csv`).then((res) => res.text());
-  return Promise.all([m, um]);
+onUpdated(async () => {
+  showChart.value = false;
+  [matched.value, unmatched.value] = await updateCSV([
+    props.game.matching,
+    props.game.nonmatching,
+  ]);
+  showChart.value = true;
+});
+
+async function updateCSV(keys: string[]): Promise<string[]> {
+  const results: Promise<string>[] = [];
+  keys.forEach((key) => results.push(store.dispatch("getSetCsvCache", key)));
+  return Promise.all(results);
 }
 </script>
 
