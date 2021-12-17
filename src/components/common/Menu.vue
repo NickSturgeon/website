@@ -19,7 +19,7 @@ import games from "../../assets/json/games.json";
         </router-link>
         <menu-dropdown as="div" class="relative inline-block">
           <menu-button
-            class="inline-flex items-center justify-center w-full text-white align-sub text-lg bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md px-4"
+            class="inline-flex items-center justify-center w-full text-white align-sub text-lg bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md px-4 py-1"
           >
             Games
             <ChevronDownIcon
