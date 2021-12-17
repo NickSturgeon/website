@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import linker from "../../assets/img/linker.png";
+
 const props = defineProps<{
   simple?: boolean;
   file?: number;
@@ -11,24 +13,25 @@ const props = defineProps<{
     <template v-if="!props.simple">
       <header>
         <div
-          class="box slot text-center text-2xl font-semibold cursor-default text-slate-900 p-3 w-28"
+          class="box slot text-left pl-5 text-2xl relative font-semibold cursor-default text-slate-900 p-3 w-32"
         >
           File {{ props.file }}
+          <img class="absolute h-12 -right-10 bottom-1.5" :src="linker" />
         </div>
         <div
           class="box border-r-solid border-l-solid border-t-solid border-b-none p-3 w-auto h-10 flex-grow box-content text-2xl rounded-b-none"
         >
-          {{ props.heading }}
+          <div class="pl-6">{{ props.heading }}</div>
           <hr />
         </div>
       </header>
 
       <!-- Hack to get the staggered border -->
       <div
-        class="box hack-slot box-content border-r-none border-b-none rounded-b-none rounded-r-none float-left h-0 p-0 w-28"
+        class="box hack-slot box-content border-r-none border-b-none rounded-b-none rounded-r-none float-left h-0 p-0 w-32"
       ></div>
       <div
-        class="box hack-heading border-t-none border-b-none border-l-none ml-28 rounded-none p-0 relative w-auto"
+        class="box hack-heading border-t-none border-b-none border-l-none ml-32 rounded-none p-0 relative w-auto"
       ></div>
     </template>
     <article

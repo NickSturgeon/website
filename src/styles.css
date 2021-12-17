@@ -4,10 +4,10 @@
 
 :root {
   --border-width: 6px;
-  --color-bg: rgba(47, 72, 124, 0.4);
-  --color-bg-tr: rgba(47, 72, 124, 0.2);
-  --color-bg-hl: rgba(63, 103, 205, 0.6);
-  --color-bg-hl-tr: rgba(63, 103, 205, 0.6);
+  --color-bg: rgba(47, 72, 124, 0.6);
+  --color-bg-tr: rgba(47, 72, 124, 0.4);
+  --color-bg-hl: rgba(63, 103, 205, 0.8);
+  --color-bg-hl-tr: rgba(63, 103, 205, 0.8);
   --color-bd: rgb(28, 42, 73);
   --color-bd-hl: rgb(95, 135, 221);
   --font-size-heading: 22px;
