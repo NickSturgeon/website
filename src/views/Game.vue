@@ -30,10 +30,10 @@ watchEffect(async () => {
 <template>
   <div>
     <div class="relative max-w-3xl m-auto justify-between items-center">
-      <h1 class="text-white text-4xl my-5">{{ game?.title }}</h1>
+      <h1 class="px-4 md:px-0 text-white text-4xl my-5">{{ game?.title }}</h1>
       <div>
         <transition name="fade">
-          <img :key="img" class="w-12 absolute bottom-0 right-0" :src="img" />
+          <img :key="img" class="w-12 absolute bottom-0 right-4 md:right-0" :src="img" />
         </transition>
       </div>
     </div>
