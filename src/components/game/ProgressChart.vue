@@ -108,7 +108,7 @@ function getOptions(
           return `${(+this.value * 100).toFixed(2)}%`;
         },
       },
-      max: max(matched, unmatched),
+      max: 1, //max(matched, unmatched),
     },
     series: [
       {

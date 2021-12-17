@@ -10,7 +10,7 @@ export interface State {
   }[];
 }
 
-const cacheTimeoutMs: number = 60 * 1000; // 60s
+const cacheTimeoutMs: number = 5 * 60 * 1000; // 5m
 
 export const store = createStore<State>({
   state: {
