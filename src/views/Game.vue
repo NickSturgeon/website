@@ -9,14 +9,17 @@ import games from "../assets/json/games.json";
 const router = useRouter();
 const route = useRoute();
 
-const slug = ref(route.params.slug);
+const slug = shallowRef(route.params.slug);
 
 const game = shallowRef<Game>();
 const img = shallowRef<string>();
 const faq = shallowRef();
 
+let hash = route.hash;
+
 onBeforeRouteUpdate((to) => {
   slug.value = to.params.slug;
+  hash = to.hash;
 });
 
 watchEffect(async () => {
@@ -32,11 +35,11 @@ async function scrollToHash() {
   const maxRetries = 10;
   let currentTry = 0;
 
-  if (route.hash !== "") {
-    var element = document.getElementById(route.hash.slice(1));
+  if (hash !== "") {
+    var element = document.getElementById(hash.slice(1));
     while (element === null && currentTry++ < maxRetries) {
       await new Promise((resolve) => setTimeout(resolve, checkDelayMs));
-      element = document.getElementById(route.hash.slice(1));
+      element = document.getElementById(hash.slice(1));
     }
     element?.scrollIntoView();
   }
