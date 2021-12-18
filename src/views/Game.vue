@@ -38,7 +38,7 @@ async function scrollToHash() {
       await new Promise((resolve) => setTimeout(resolve, checkDelayMs));
       element = document.getElementById(route.hash.slice(1));
     }
-    element!.scrollIntoView();
+    element?.scrollIntoView();
   }
 }
 </script>
