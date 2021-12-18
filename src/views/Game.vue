@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef, defineAsyncComponent, watchEffect } from "vue";
+import { ref, shallowRef, defineAsyncComponent, watchEffect, onMounted } from "vue";
 import { useRouter, useRoute, onBeforeRouteUpdate } from "vue-router";
 import GameDetails from "@/components/game/GameDetails.vue";
 import N64Box from "@/components/common/N64Box.vue";
@@ -14,6 +14,14 @@ const slug = ref(route.params.slug);
 const game = shallowRef<Game>();
 const img = shallowRef<string>();
 const faq = shallowRef();
+
+onMounted(() => {
+  if (route.hash !== "") {
+    var element = document.getElementById(route.hash.slice(1));
+    var position = element?.offsetTop ?? 0;
+    window.scrollTo(0, position);
+  }
+});
 
 onBeforeRouteUpdate((to) => {
   slug.value = to.params.slug;
