@@ -104,10 +104,10 @@ async function parseData(): Promise<[KeyNumber[], KeyNumber[]]> {
     </template>
     <br />
     <template v-for="(metric, key) in chart">
-      <span class="float-left font-semibold">{{ key }}</span>
+      <span class="float-left">{{ key }}</span>
       <template v-for="(val, j) in metric">
         <span
-          class="float-right inline-block text-right w-28 font-semibold"
+          class="float-right inline-block text-right w-28"
           :class="j === 0 ? 'text-green-400' : 'text-yellow-400'"
         >
           <span v-if="val === undefined">&mdash;&emsp;&percnt;</span>

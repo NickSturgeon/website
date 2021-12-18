@@ -7,19 +7,19 @@ import games from "../../assets/json/games.json";
 
 <template>
   <div class="w-full h-14 bg-black bg-opacity-20">
-    <div class="flex justify-center items-center">
+    <div class="flex justify-center">
       <div class="px-4">
         <router-link to="/" class="nav-link">
           <img
             class="aspect-square h-10 inline mr-4 my-2"
-            alt="Zelda RET logo"
+            alt="ZeldaRET logo"
             src="@/assets/img/logo.png"
           />
-          <span class="text-white align-middle text-2xl font-bold mr-12">Zelda RET</span>
+          <span class="text-white align-middle text-2xl font-bold mr-12">ZeldaRET</span>
         </router-link>
         <menu-dropdown as="div" class="relative inline-block">
           <menu-button
-            class="inline-flex items-center justify-center w-full text-white text-lg bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            class="inline-flex items-center justify-center w-full text-white text-lg bg-slate-400 bg-opacity-10 hover:bg-opacity-20 rounded-md px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
           >
             Games
             <chevron-down-icon
