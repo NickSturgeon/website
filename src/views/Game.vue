@@ -15,14 +15,6 @@ const game = shallowRef<Game>();
 const img = shallowRef<string>();
 const faq = shallowRef();
 
-onMounted(() => {
-  if (route.hash !== "") {
-    var element = document.getElementById(route.hash.slice(1));
-    var position = element?.offsetTop ?? 0;
-    window.scrollTo(0, position);
-  }
-});
-
 onBeforeRouteUpdate((to) => {
   slug.value = to.params.slug;
 });
@@ -32,7 +24,23 @@ watchEffect(async () => {
   if (game.value === undefined) router.replace("/");
   img.value = new URL(`../assets/img/games/${slug.value}.png`, import.meta.url).href;
   faq.value = defineAsyncComponent(() => import(`../assets/faq/${game.value!.faq}.md`));
+  scrollToHash();
 });
+
+async function scrollToHash() {
+  const checkDelayMs = 500;
+  const maxRetries = 10;
+  let currentTry = 0;
+
+  if (route.hash !== "") {
+    var element = document.getElementById(route.hash.slice(1));
+    while (element === null && currentTry++ < maxRetries) {
+      await new Promise((resolve) => setTimeout(resolve, checkDelayMs));
+      element = document.getElementById(route.hash.slice(1));
+    }
+    element!.scrollIntoView();
+  }
+}
 </script>
 
 <template>
