@@ -16,12 +16,19 @@ const props = defineProps<{
 }>();
 
 const options = shallowRef<Options>();
+const useRelativeScale = shallowRef(true);
+
+let showScaleButton = shallowRef(true);
 
 watchEffect(() => {
   const matchedData = parseData(props.matched, props.metadata);
   const unmatchedData = parseData(props.unmatched, props.metadata);
   options.value = getOptions(matchedData, unmatchedData, props.metadata);
 });
+
+function changeScale() {
+  useRelativeScale.value = !useRelativeScale.value;
+}
 
 function max(matched: PointOptionsObject[], unmatched: PointOptionsObject[]): number {
   const interval = 1 / 5;
@@ -70,6 +77,11 @@ function getOptions(
   unmatched: PointOptionsObject[],
   metadata: ChartData
 ): Options {
+  const relativeScale = max(matched, unmatched);
+  if (relativeScale >= 1) {
+    showScaleButton.value = false;
+  }
+
   return {
     chart: { type: "line" },
     title: { text: metadata.title },
@@ -108,7 +120,7 @@ function getOptions(
           return `${(+this.value * 100).toFixed(2)}%`;
         },
       },
-      max: 1, //max(matched, unmatched),
+      max: useRelativeScale.value && showScaleButton.value ? relativeScale : 1,
     },
     series: [
       {
@@ -129,5 +141,14 @@ function getOptions(
 </script>
 
 <template>
-  <chart :options="options"></chart>
+  <div>
+    <button
+      v-if="showScaleButton"
+      class="rounded-sm py-1 px-2 z-40 text-white absolute bottom-10 sm:bottom-2 left-2 text-xs bg-neutral-500"
+      @click="changeScale"
+    >
+      Scale: {{ useRelativeScale ? "Relative" : "Total" }}
+    </button>
+    <chart :options="options"></chart>
+  </div>
 </template>
