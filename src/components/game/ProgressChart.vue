@@ -149,6 +149,6 @@ function getOptions(
     >
       Scale: {{ useRelativeScale ? "Relative" : "Total" }}
     </button>
-    <chart :options="options"></chart>
+    <chart class="rounded-sm" :options="options"></chart>
   </div>
 </template>

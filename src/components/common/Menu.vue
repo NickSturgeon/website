@@ -19,7 +19,7 @@ import games from "../../assets/json/games.json";
         </router-link>
         <menu-dropdown as="div" class="relative inline-block">
           <menu-button
-            class="inline-flex items-center justify-center w-full text-white text-lg bg-slate-400 bg-opacity-10 hover:bg-opacity-20 rounded-md px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            class="inline-flex items-center justify-center w-full text-white text-lg bg-slate-400 bg-opacity-10 hover:bg-opacity-20 rounded-sm px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
           >
             Games
             <chevron-down-icon
@@ -36,14 +36,14 @@ import games from "../../assets/json/games.json";
             leave-to-class="transform scale-95 opacity-0"
           >
             <menu-items
-              class="text-black p-1 mt-1 z-50 text-left w-48 absolute right-0 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              class="text-black p-1 mt-1 z-50 text-left w-48 absolute right-0 origin-top-right bg-white rounded-sm shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <template v-for="game in games">
                 <menu-item v-slot="{ active }">
                   <router-link :to="`/games/${game.slug}`" class="nav-link">
                     <p
                       class="font-semibold p-2"
-                      :class="active ? 'bg-purple text-white rounded-md' : ''"
+                      :class="active ? 'bg-purple text-white rounded-sm' : ''"
                     >
                       {{ game.title }}
                     </p>
