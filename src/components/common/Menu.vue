@@ -22,7 +22,7 @@ import games from "../../assets/json/games.json";
             class="inline-flex items-center justify-center w-full text-white text-lg bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
           >
             Games
-            <ChevronDownIcon
+            <chevron-down-icon
               class="w-5 h-5 ml-2 -mr-1 mt-0.5 text-white"
               aria-hidden="true"
             />
@@ -36,7 +36,7 @@ import games from "../../assets/json/games.json";
             leave-to-class="transform scale-95 opacity-0"
           >
             <menu-items
-              class="text-black p-1 z-50 text-left w-48 bg-white rounded-md absolute right-0"
+              class="text-black p-1 mt-1 z-50 text-left w-48 absolute right-0 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               <template v-for="game in games">
                 <menu-item v-slot="{ active }">

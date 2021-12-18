@@ -16,6 +16,9 @@ const props = defineProps<{
           class="box slot text-right pr-9 text-2xl relative font-semibold cursor-default text-slate-900 p-3 w-32"
         >
           File {{ props.file }}
+          <div
+            class="hidden absolute file-select inset-0 bg-[rgba(164,218,228,0.4)]"
+          ></div>
           <img class="absolute h-12 -right-10 bottom-1.5" :src="linker" />
         </div>
         <div
@@ -41,3 +44,13 @@ const props = defineProps<{
     </article>
   </section>
 </template>
+
+<style>
+.file-select {
+  box-shadow: 0 0 0 6px rgba(164, 218, 228, 0.4);
+}
+
+.slot:hover .file-select {
+  display: block !important;
+}
+</style>
