@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, shallowRef, defineAsyncComponent, watchEffect, onMounted } from "vue";
+import { shallowRef, defineAsyncComponent, watchEffect, onMounted } from "vue";
 import { useRouter, useRoute, onBeforeRouteUpdate } from "vue-router";
-import GameDetails from "@/components/game/GameDetails.vue";
-import N64Box from "@/components/common/N64Box.vue";
+import GameDetails from "../components/game/GameDetails.vue";
+import N64Box from "../components/common/N64Box.vue";
 
 import games from "../assets/json/games.json";
 
@@ -51,7 +51,12 @@ async function scrollToHash() {
     <div class="relative max-w-3xl m-auto justify-between items-center">
       <h1 class="px-4 md:px-0 text-white text-4xl my-5">{{ game?.title }}</h1>
       <div>
-        <transition name="fade">
+        <transition
+          enter-active-class="transition-opacity duration-500 ease"
+          enter-from-class="opacity-0"
+          leave-active-class="transition-opacity duration-500 ease"
+          leave-to-class="opacity-0"
+        >
           <img :key="img" class="w-12 absolute bottom-0 right-4 md:right-0" :src="img" />
         </transition>
       </div>
@@ -64,15 +69,3 @@ async function scrollToHash() {
     </n64-box>
   </div>
 </template>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

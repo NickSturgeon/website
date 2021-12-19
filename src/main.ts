@@ -3,8 +3,8 @@ import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 import { store, key } from "./store";
-
 import { routes } from "./routes";
+
 import "./styles.css";
 
 const app = createApp(App);

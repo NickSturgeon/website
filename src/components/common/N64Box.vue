@@ -9,14 +9,16 @@ const props = defineProps<{
 </script>
 
 <template>
-  <section class="n64-box max-w-3xl m-auto box-border text-white relative">
+  <section class="n64-box group max-w-3xl m-auto box-border text-white relative">
     <template v-if="!props.simple">
       <header>
         <div
           class="box slot text-right pr-9 text-2xl relative font-semibold cursor-default text-slate-900 p-3 w-32"
         >
           File {{ props.file }}
-          <div class="file-select opacity-0 absolute inset-0"></div>
+          <div
+            class="file-select bg-file-glow shadow-file-glow opacity-0 group-hover:opacity-100 absolute inset-0 transition-opacity duration-300"
+          ></div>
           <img class="absolute h-12 -right-10 bottom-1.5" :src="linker" />
         </div>
         <div
@@ -42,21 +44,3 @@ const props = defineProps<{
     </article>
   </section>
 </template>
-
-<style>
-.file-select {
-  transition: opacity 0.3s ease;
-  background: linear-gradient(
-    120deg,
-    rgba(164, 218, 228, 0.4) 10%,
-    rgba(164, 218, 228, 0.1) 60%,
-    rgba(164, 218, 228, 0.4) 80%,
-    rgba(164, 218, 228, 0.4)
-  );
-  box-shadow: 0 0 8px 6px rgba(164, 218, 228, 0.4), inset 0 0 6px rgba(164, 218, 228, 0.4);
-}
-
-.n64-box:hover .file-select {
-  opacity: 100;
-}
-</style>

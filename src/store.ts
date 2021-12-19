@@ -1,5 +1,6 @@
 import { InjectionKey } from "vue";
 import { createStore, useStore as baseUseStore, Store } from "vuex";
+import { constants } from "./utilities/constants";
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
@@ -32,7 +33,7 @@ export const store = createStore<State>({
       let data = cache?.data;
 
       if (cache === busted) {
-        data = await fetch(`/csv/${key}.csv`).then((res) => res.text());
+        data = await fetch(`${constants.resourceURL}/csv/${key}.csv`).then((res) => res.text());
         context.commit("addCsvCache", { key, data });
         setTimeout(() => context.commit("removeCsvCache", key), cacheTimeoutMs);
       }

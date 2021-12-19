@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
-import { markdown } from "./src/markdown";
+import { markdown } from "./src/utilities/markdown";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,9 +12,4 @@ export default defineConfig({
     }),
     markdown(),
   ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
 });

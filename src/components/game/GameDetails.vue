@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { shallowRef, onBeforeMount, onUpdated } from "vue";
 import { useStore } from "../../store";
-import N64Box from "@/components/common/N64Box.vue";
-import ProgressInfo from "@/components/game/ProgressInfo.vue";
-import ProgressChart from "@/components/game/ProgressChart.vue";
+import N64Box from "../common/N64Box.vue";
+import ProgressInfo from "./ProgressInfo.vue";
+import ProgressChart from "./ProgressChart.vue";
 
 const props = defineProps<{ game: Game }>();
 const store = useStore();
@@ -44,7 +44,12 @@ async function updateCSV(keys: string[]): Promise<string[]> {
   <template v-for="chart in game.charts" :key="game.slug + chart.index">
     <n64-box simple>
       <div class="rounded-sm bg-white h-chartHeight block relative">
-        <transition name="fade-chart">
+        <transition
+          enter-active-class="transition-opacity duration-200 ease"
+          enter-from-class="opacity-0"
+          leave-active-class="transition-opacity duration-200 ease"
+          leave-to-class="opacity-0"
+        >
           <progress-chart
             v-if="showChart"
             class="rounded-sm absolute inset-0"
@@ -64,15 +69,3 @@ async function updateCSV(keys: string[]): Promise<string[]> {
     </n64-box>
   </template>
 </template>
-
-<style>
-.fade-chart-enter-active,
-.fade-chart-leave-active {
-  transition: opacity 0.2s ease-in;
-}
-
-.fade-chart-enter-from,
-.fade-chart-leave-to {
-  opacity: 0;
-}
-</style>

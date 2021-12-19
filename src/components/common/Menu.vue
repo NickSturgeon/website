@@ -13,7 +13,7 @@ import games from "../../assets/json/games.json";
           <img
             class="aspect-square h-10 inline mr-4 my-2"
             alt="ZeldaRET logo"
-            src="@/assets/img/logo.png"
+            src="../../assets/img/logo.png"
           />
           <span class="text-white align-middle text-2xl font-bold mr-12">ZeldaRET</span>
         </router-link>

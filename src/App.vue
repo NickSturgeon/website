@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import NavMenu from "@/components/common/Menu.vue";
-import NavFooter from "@/components/common/Footer.vue";
+import NavMenu from "./components/common/Menu.vue";
+import NavFooter from "./components/common/Footer.vue";
 
 // Preload bg images for smooth transitions
 onMounted(() => {
@@ -18,7 +18,13 @@ const bg = computed(() => route.params.slug);
 </script>
 
 <template>
-  <transition appear name="fade">
+  <transition
+    appear
+    enter-active-class="transition-opacity duration-500 ease"
+    enter-from-class="opacity-0"
+    leave-active-class="transition-opacity duration-500 ease"
+    leave-to-class="opacity-0"
+  >
     <div
       v-if="bg === 'oot'"
       class="bg-oot bg-left top-0 bottom-0 right-0 bg-cover fixed w-full"
@@ -40,15 +46,3 @@ const bg = computed(() => route.params.slug);
     <nav-footer />
   </div>
 </template>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
