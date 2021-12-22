@@ -103,8 +103,9 @@ async function getOptions(): Promise<Options> {
   const totalScaleThreshold = 0.9;
   showScaleButton.value = relativeScale < totalScaleThreshold;
 
+  const chartType = "area";
   return {
-    chart: { type: "line" },
+    chart: { type: chartType },
     title: { text: props.progress.name },
     tooltip: {
       formatter: function () {
@@ -117,14 +118,16 @@ async function getOptions(): Promise<Options> {
           2
         )}%<br/>\n`;
 
-        tooltip += `-------------------------------------------<br/>\n`;
+        if (props.progress.metrics.length > 0) {
+          tooltip += `-------------------------------------------<br/>\n`;
 
-        for (const metric of zip(props.progress.metrics, opt.metrics)) {
-          const text = metric[0].description
-            .replace("{0}", metric[1][0].toString())
-            .replace("{1}", metric[1][1].toString())
-            .replace("{2}", (+metric[1][2] * 100).toFixed(2));
-          tooltip += `${text}<br/>\n`;
+          for (const metric of zip(props.progress.metrics, opt.metrics)) {
+            const text = metric[0].description
+              .replace("{0}", metric[1][0].toString())
+              .replace("{1}", metric[1][1].toString())
+              .replace("{2}", (+metric[1][2] * 100).toFixed(2));
+            tooltip += `${text}<br/>\n`;
+          }
         }
 
         return tooltip;
@@ -141,13 +144,17 @@ async function getOptions(): Promise<Options> {
           return `${(+this.value * 100).toFixed(2)}%`;
         },
       },
-      max: useRelativeScale.value && showScaleButton.value ? relativeScale : 1,
+      max: useRelativeScale.value && showScaleButton.value ? null : 1,
     },
     series: zip(props.progress.data, data).map((data, i) => ({
-      type: "line",
+      type: chartType,
       name: data[0].name,
       data: data[1].sort((a, b) => a.x! - b.x!),
-      color: i > 0 ? "rgb(74, 222, 128)" : "rgb(250, 204, 21)",
+      visible: data[0].defaultChartVisibility,
+      color:
+        i > 0 || props.progress.data.length === 1
+          ? "rgb(74, 222, 128)"
+          : "rgb(250, 204, 21)",
     })),
   };
 }
