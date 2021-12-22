@@ -25,8 +25,7 @@ const props = defineProps<{
         <div
           class="box border-r-solid border-l-solid border-t-solid border-b-none p-3 w-auto h-10 flex-grow box-content text-2xl font-bold rounded-b-none"
         >
-          <div class="sm:pl-6">{{ heading }}</div>
-          <hr />
+          <div class="sm:pl-6 pb-2 border-b-4 border-border">{{ heading }}</div>
         </div>
       </header>
 

@@ -72,7 +72,7 @@ async function getLatestPoint(csv: string): Promise<string[]> {
 </script>
 
 <template>
-  <div class="mt-5 sm:mt-0 flex justify-between">
+  <div class="flex justify-between">
     <span class="font-bold">Last Updated</span>
     <span class="text-white font-bold text-right">{{
       lastUpdate?.toLocaleString() ?? "Unknown"
