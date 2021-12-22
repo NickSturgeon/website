@@ -11,11 +11,10 @@ const hasFAQ = computed(() => props.game?.faq !== null && props.game.faq !== "")
 
 watch(
   props,
-  () => {
+  async (props) => {
     if (hasFAQ.value) {
-      faq.value = defineAsyncComponent(
-        () => import(`../../assets/faq/${props.game.faq}.md`)
-      );
+      const md = await import(`../../assets/faq/${props.game.faq}.md`);
+      faq.value = md.default;
     }
   },
   { immediate: true }
