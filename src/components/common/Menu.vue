@@ -18,7 +18,7 @@ import games from "../../assets/json/games.json";
         </router-link>
         <menu-dropdown as="div" class="relative inline-block">
           <menu-button
-            class="inline-flex items-center justify-center w-full text-white text-lg bg-slate-400 bg-opacity-10 hover:bg-opacity-20 rounded-sm px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            class="inline-flex font-semibold items-center justify-center w-full text-white text-lg bg-slate-400 bg-opacity-10 hover:bg-opacity-20 rounded-sm px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
           >
             Games
             <chevron-down-icon

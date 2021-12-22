@@ -92,7 +92,7 @@
     }
   }
 
-  section.n64-box {
+  .n64-box {
     background: linear-gradient(
       120deg,
       var(--color-bg) 10%,

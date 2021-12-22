@@ -72,7 +72,7 @@ async function getLatestPoint(csv: string): Promise<string[]> {
 </script>
 
 <template>
-  <div class="flex justify-between">
+  <div class="mt-5 sm:mt-0 flex justify-between">
     <span class="font-bold">Last Updated</span>
     <span class="text-white font-bold text-right">{{
       lastUpdate?.toLocaleString() ?? "Unknown"
@@ -84,10 +84,12 @@ async function getLatestPoint(csv: string): Promise<string[]> {
   <table class="w-full">
     <thead>
       <tr>
-        <th class="text-left underline w-1/2 md:w-3/5">{{ total?.name }}</th>
+        <th class="text-left align-bottom underline sm:w-1/2 md:w-3/5">
+          {{ total?.name }}
+        </th>
         <template v-for="(name, i) of progress.data.map((d) => d.name)">
           <th
-            class="text-right underline w-1/4 md:w-1/5"
+            class="text-right align-bottom underline sm:w-1/4 md:w-1/5"
             :class="
               i > 0 || total?.values.length === 1 ? 'text-green-400' : 'text-yellow-400'
             "

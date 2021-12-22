@@ -11,7 +11,7 @@ const props = defineProps<{
     <template v-if="!simple">
       <header>
         <div
-          class="box slot text-right pr-9 text-2xl relative font-semibold cursor-default text-slate-900 p-3 w-32"
+          class="box slot hidden sm:block text-right pr-9 text-2xl relative font-semibold cursor-default text-slate-900 p-3 w-32"
         >
           File {{ file }}
           <div
@@ -23,19 +23,19 @@ const props = defineProps<{
           />
         </div>
         <div
-          class="box border-r-solid border-l-solid border-t-solid border-b-none p-3 w-auto h-10 flex-grow box-content text-2xl rounded-b-none"
+          class="box border-r-solid border-l-solid border-t-solid border-b-none p-3 w-auto h-10 flex-grow box-content text-2xl font-bold rounded-b-none"
         >
-          <div class="pl-6">{{ heading }}</div>
+          <div class="sm:pl-6">{{ heading }}</div>
           <hr />
         </div>
       </header>
 
       <!-- Hack to get the staggered border -->
       <div
-        class="box hack-slot box-content border-r-none border-b-none rounded-b-none rounded-r-none float-left h-0 p-0 w-32"
+        class="hidden sm:block box hack-slot box-content border-r-none border-b-none rounded-b-none rounded-r-none float-left h-0 p-0 w-32"
       ></div>
       <div
-        class="box hack-heading border-t-none border-b-none border-l-none ml-32 rounded-none p-0 relative w-auto"
+        class="hidden sm:block box hack-heading border-t-none border-b-none border-l-none ml-32 rounded-none p-0 relative w-auto"
       ></div>
     </template>
     <article
