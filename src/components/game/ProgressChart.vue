@@ -146,7 +146,7 @@ async function getOptions(): Promise<Options> {
     series: zip(props.progress.data, data).map((data, i) => ({
       type: "line",
       name: data[0].name,
-      data: data[1],
+      data: data[1].sort((a, b) => a.x! - b.x!),
       color: i > 0 ? "rgb(74, 222, 128)" : "rgb(250, 204, 21)",
     })),
   };
