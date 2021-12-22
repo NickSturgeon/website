@@ -4,17 +4,18 @@ import { useRoute } from "vue-router";
 import NavMenu from "./components/common/Menu.vue";
 import NavFooter from "./components/common/Footer.vue";
 
-// Preload bg images for smooth transitions
+// preload bg images for smoother transitions
 onMounted(() => {
   const bg = [
     new URL("./assets/img/bg-oot.png", import.meta.url).href,
     new URL("./assets/img/bg-mm.png", import.meta.url).href,
+    new URL("./assets/img/bg-tmc.png", import.meta.url).href,
   ];
   bg.forEach((bg) => (new Image().src = bg));
 });
 
 const route = useRoute();
-const bg = computed(() => route.params.slug);
+const bg = computed(() => route.params.id);
 </script>
 
 <template>
@@ -32,6 +33,10 @@ const bg = computed(() => route.params.slug);
     <div
       v-else-if="bg === 'mm'"
       class="bg-mm bg-left top-0 bottom-0 right-0 bg-cover fixed w-full"
+    ></div>
+    <div
+      v-else-if="bg === 'tmc'"
+      class="bg-tmc bg-left top-0 bottom-0 right-0 bg-cover fixed w-full"
     ></div>
     <div
       v-else

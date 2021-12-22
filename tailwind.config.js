@@ -14,6 +14,7 @@ module.exports = {
       backgroundImage: {
         oot: "url('./src/assets/img/bg-oot.png')",
         mm: "url('./src/assets/img/bg-mm.png')",
+        tmc: "url('./src/assets/img/bg-tmc.png')",
         "file-glow":
           "linear-gradient(120deg, rgba(164, 218, 228, 0.4) 10%, rgba(164, 218, 228, 0.1) 60%, rgba(164, 218, 228, 0.4) 80%, rgba(164, 218, 228, 0.4))",
       },

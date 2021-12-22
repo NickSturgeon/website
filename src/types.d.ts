@@ -1,16 +1,31 @@
 declare interface Game {
-  slug: string;
+  id: string;
   title: string;
+  links: {
+    name: string;
+    icon: string;
+    url: string;
+  }[];
   faq: string;
-  links: { [type: string]: string };
-  matching: string;
-  nonmatching: string;
-  charts: ChartData[];
+  progress: ProgressData[];
 }
 
-declare interface ChartData {
+declare interface ProgressData {
+  name: string;
   title: string;
-  subtitle: string;
-  index: number;
-  series: { metric: string; description: string }[];
+  data: {
+    name: string;
+    csv: string;
+    defaultChartVisibility: boolean;
+  }[];
+  total: {
+    name: string;
+    index: number;
+    description: string;
+  };
+  metrics: {
+    name: string;
+    index: number;
+    description: string;
+  }[];
 }

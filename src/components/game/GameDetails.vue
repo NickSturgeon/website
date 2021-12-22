@@ -1,71 +1,45 @@
 <script setup lang="ts">
-import { shallowRef, onBeforeMount, onUpdated } from "vue";
-import { useStore } from "../../store";
+import { shallowRef, defineAsyncComponent, computed, watch } from "vue";
 import N64Box from "../common/N64Box.vue";
 import ProgressInfo from "./ProgressInfo.vue";
 import ProgressChart from "./ProgressChart.vue";
 
 const props = defineProps<{ game: Game }>();
-const store = useStore();
 
-const matched = shallowRef("");
-const unmatched = shallowRef("");
+const faq = shallowRef();
+const hasFAQ = computed(() => props.game?.faq !== null && props.game.faq !== "");
 
-const showChart = shallowRef(false);
-
-onBeforeMount(async () => {
-  [matched.value, unmatched.value] = await updateCSV([
-    props.game.matching,
-    props.game.nonmatching,
-  ]);
-  showChart.value = true;
-});
-
-onUpdated(async () => {
-  showChart.value = false;
-  [matched.value, unmatched.value] = await updateCSV([
-    props.game.matching,
-    props.game.nonmatching,
-  ]);
-  showChart.value = true;
-});
-
-async function updateCSV(keys: string[]): Promise<string[]> {
-  const results: Promise<string>[] = [];
-  keys.forEach((key) => results.push(store.dispatch("getSetCsvCache", key)));
-  return Promise.all(results);
-}
+watch(
+  props,
+  () => {
+    if (hasFAQ.value) {
+      faq.value = defineAsyncComponent(
+        () => import(`../../assets/faq/${props.game.faq}.md`)
+      );
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
-  <n64-box :file="1" heading="Project Progress">
-    <progress-info :game="game" :matched="matched" :unmatched="unmatched" />
-  </n64-box>
-  <template v-for="chart in game.charts" :key="game.slug + chart.index">
-    <n64-box simple>
-      <div class="rounded-sm bg-white h-chartHeight block relative">
-        <transition
-          enter-active-class="transition-opacity duration-200 ease"
-          enter-from-class="opacity-0"
-          leave-active-class="transition-opacity duration-200 ease"
-          leave-to-class="opacity-0"
-        >
-          <progress-chart
-            v-if="showChart"
-            class="rounded-sm absolute inset-0"
-            :metadata="chart"
-            :matched="matched"
-            :unmatched="unmatched"
-          />
-          <div
-            v-else
-            class="text-sm text-center inset-0 text-black"
-            style="line-height: 400px"
-          >
-            <p class="animate-pulse">Loading...</p>
-          </div>
-        </transition>
-      </div>
-    </n64-box>
+  <template v-for="(progress, i) in game.progress">
+    <div class="mb-4 group max-w-3xl mx-auto">
+      <n64-box :file="i + 1" :heading="progress.title">
+        <progress-info :progress="progress" />
+      </n64-box>
+      <n64-box simple>
+        <progress-chart :progress="progress" />
+      </n64-box>
+    </div>
   </template>
+  <div class="max-w-3xl mx-auto">
+    <n64-box
+      v-if="hasFAQ"
+      :file="game.progress.length + 1"
+      heading="Frequently Asked Questions"
+    >
+      <component :is="faq" class="markdown" />
+    </n64-box>
+  </div>
 </template>

@@ -40,7 +40,7 @@ import games from "../../assets/json/games.json";
             >
               <template v-for="game in games">
                 <menu-item v-slot="{ active }">
-                  <router-link :to="`/games/${game.slug}`" class="nav-link">
+                  <router-link :to="`/games/${game.id}`" class="nav-link">
                     <p
                       class="font-semibold p-2"
                       :class="active ? 'bg-purple text-white rounded-sm' : ''"

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import linker from "../../assets/img/linker.png";
-
 const props = defineProps<{
   simple?: boolean;
   file?: number;
@@ -9,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <section class="n64-box group max-w-3xl m-auto box-border text-white relative">
+  <section class="n64-box group box-border text-white relative">
     <template v-if="!props.simple">
       <header>
         <div
@@ -19,7 +17,10 @@ const props = defineProps<{
           <div
             class="file-select bg-file-glow shadow-file-glow opacity-0 group-hover:opacity-100 absolute inset-0 transition-opacity duration-300"
           ></div>
-          <img class="absolute h-12 -right-10 bottom-1.5" :src="linker" />
+          <img
+            class="absolute h-12 -right-10 bottom-1.5"
+            src="../../assets/img/linker.png"
+          />
         </div>
         <div
           class="box border-r-solid border-l-solid border-t-solid border-b-none p-3 w-auto h-10 flex-grow box-content text-2xl rounded-b-none"

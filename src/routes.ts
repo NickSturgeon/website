@@ -10,7 +10,7 @@ export const routes = [
     },
   },
   {
-    path: "/games/:slug",
+    path: "/games/:id",
     component: Game,
     meta: {
       title: "Game",

@@ -71,7 +71,7 @@
     }
 
     a {
-      @apply text-gold;
+      @apply text-yellow-400;
     }
 
     nav a {

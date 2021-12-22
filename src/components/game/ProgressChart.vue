@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { shallowRef, watchEffect } from "vue";
+import { shallowRef, watch } from "vue";
 import { Chart } from "highcharts-vue";
 import { Options, PointOptionsObject } from "highcharts";
+import { useStore } from "../../store";
+import { cacheCSV, zip } from "../../utilities/helpers";
 
 type Metric = [numerator: number, denominator: number, percent: number];
 interface CustomPointOptionsObject extends PointOptionsObject {
@@ -10,82 +12,100 @@ interface CustomPointOptionsObject extends PointOptionsObject {
 }
 
 const props = defineProps<{
-  metadata: ChartData;
-  matched: string;
-  unmatched: string;
+  progress: ProgressData;
 }>();
+
+const store = useStore();
 
 const options = shallowRef<Options>();
 const useRelativeScale = shallowRef(true);
 
 let showScaleButton = shallowRef(true);
 
-watchEffect(() => {
-  const matchedData = parseData(props.matched, props.metadata);
-  const unmatchedData = parseData(props.unmatched, props.metadata);
-  options.value = getOptions(matchedData, unmatchedData, props.metadata);
-});
+let csv: string[] = [];
+let data: CustomPointOptionsObject[][] = [];
+
+watch(
+  props,
+  async () => {
+    options.value = undefined;
+    useRelativeScale.value = true;
+    csv = await getCSV();
+    data = await parseCSV();
+    options.value = await getOptions();
+  },
+  { immediate: true }
+);
+
+watch(useRelativeScale, async () => (options.value = await getOptions()));
+
+async function getCSV(): Promise<string[]> {
+  return cacheCSV(
+    store,
+    props.progress.data.map((d) => d.csv)
+  );
+}
 
 function changeScale() {
   useRelativeScale.value = !useRelativeScale.value;
 }
 
-function max(matched: PointOptionsObject[], unmatched: PointOptionsObject[]): number {
-  const interval = 1 / 5;
-  const joined = Array.prototype
-    .concat(matched, unmatched)
-    .sort((a, b) => a["y"] - b["y"]);
-  return Math.max(interval, Math.ceil(joined.slice(-1)[0].y / interval) * interval);
+function max(data: PointOptionsObject[][]): number {
+  const y = data
+    .flat()
+    .flat()
+    .map((d) => d.y!);
+  return Math.max(...y);
 }
 
-function parseData(data: string, metadata: ChartData): PointOptionsObject[] {
-  const seriesData: CustomPointOptionsObject[] = [];
+async function parseCSV(): Promise<CustomPointOptionsObject[][]> {
+  const results: CustomPointOptionsObject[][] = [];
 
-  for (const line of data.split("\n").filter((line) => line != "")) {
-    const columns = line.split(",");
+  for (const data of csv) {
+    const series: CustomPointOptionsObject[] = [];
 
-    const x = +columns[1] * 1000; // timestamp
-    const commit = columns[2];
+    for (const points of data.split("\n").filter((line) => line != "")) {
+      const point = points.split(",");
 
-    let i = metadata.index;
-    const y = +columns[i] / +columns[i + 1]; // total percentage
-    i += 2;
+      const x = +point[1] * 1000; // timestamp
+      const commit = point[2];
 
-    const metrics: Metric[] = [];
-    for (const _ in metadata.series.slice(1)) {
-      const numerator = +columns[i];
-      const denominator = +columns[i + 1];
-      const percent = numerator / denominator;
+      let i = props.progress.total.index;
+      const y = +point[i] / +point[i + 1]; // total percentage
 
-      metrics.push([numerator, denominator, percent]); // params for the description string
-      i += 2;
+      const metrics: Metric[] = [];
+      for (const metric of props.progress.metrics) {
+        i = metric.index;
+
+        const numerator = +point[i];
+        const denominator = +point[i + 1];
+        const percent = numerator / denominator;
+
+        metrics.push([numerator, denominator, percent]);
+      }
+
+      series.push({
+        x: x,
+        y: y,
+        commit: commit,
+        metrics: metrics,
+      });
     }
 
-    seriesData.push({
-      x: x,
-      y: y,
-      commit: commit,
-      metrics: metrics,
-    });
+    results.push(series);
   }
 
-  return seriesData;
+  return results;
 }
 
-function getOptions(
-  matched: PointOptionsObject[],
-  unmatched: PointOptionsObject[],
-  metadata: ChartData
-): Options {
-  const relativeScale = max(matched, unmatched);
-  if (relativeScale >= 1) {
-    showScaleButton.value = false;
-  }
+async function getOptions(): Promise<Options> {
+  const relativeScale = max(data);
+  const totalScaleThreshold = 0.9;
+  showScaleButton.value = relativeScale < totalScaleThreshold;
 
   return {
     chart: { type: "line" },
-    title: { text: metadata.title },
-    subtitle: { text: metadata.subtitle },
+    title: { text: props.progress.name },
     tooltip: {
       formatter: function () {
         const opt = this.point.options! as CustomPointOptionsObject;
@@ -93,16 +113,17 @@ function getOptions(
 
         tooltip += `Date: ${new Date(opt.x!).toLocaleString()}<br/>\n`;
         tooltip += `Commit: ${opt.commit}<br/>\n`;
-        tooltip += `Total ${metadata.series[0].metric}: ${(opt.y! * 100).toFixed(
+        tooltip += `Total ${props.progress.total.name}: ${(opt.y! * 100).toFixed(
           2
         )}%<br/>\n`;
+
         tooltip += `-------------------------------------------<br/>\n`;
 
-        for (let i = 0; i < metadata.series.length - 1; i += 1) {
-          const text = metadata.series[i + 1].description
-            .replace("{0}", opt.metrics[i][0].toString())
-            .replace("{1}", opt.metrics[i][1].toString())
-            .replace("{2}", (+opt.metrics[i][2] * 100).toFixed(2));
+        for (const metric of zip(props.progress.metrics, opt.metrics)) {
+          const text = metric[0].description
+            .replace("{0}", metric[1][0].toString())
+            .replace("{1}", metric[1][1].toString())
+            .replace("{2}", (+metric[1][2] * 100).toFixed(2));
           tooltip += `${text}<br/>\n`;
         }
 
@@ -122,33 +143,41 @@ function getOptions(
       },
       max: useRelativeScale.value && showScaleButton.value ? relativeScale : 1,
     },
-    series: [
-      {
-        type: "line",
-        name: "Non-matched",
-        data: unmatched,
-        color: "rgb(250, 204, 21)",
-      },
-      {
-        type: "line",
-        name: "Matched",
-        data: matched,
-        color: "rgb(74, 222, 128)",
-      },
-    ],
+    series: zip(props.progress.data, data).map((data, i) => ({
+      type: "line",
+      name: data[0].name,
+      data: data[1],
+      color: i > 0 ? "rgb(74, 222, 128)" : "rgb(250, 204, 21)",
+    })),
   };
 }
 </script>
 
 <template>
-  <div>
-    <button
-      v-if="showScaleButton"
-      class="rounded-sm py-1 px-2 z-40 text-white absolute bottom-10 sm:bottom-2 left-2 text-xs bg-neutral-500"
-      @click="changeScale"
+  <div class="rounded-sm bg-white h-chartHeight block relative">
+    <transition
+      enter-active-class="transition-opacity duration-200 ease"
+      enter-from-class="opacity-0"
+      leave-active-class="transition-opacity duration-200 ease"
+      leave-to-class="opacity-0"
     >
-      Scale: {{ useRelativeScale ? "Relative" : "Total" }}
-    </button>
-    <chart class="rounded-sm" :options="options"></chart>
+      <div v-if="options" class="rounded-sm absolute inset-0">
+        <button
+          v-if="showScaleButton"
+          class="rounded-sm py-1 px-2 z-40 text-white absolute bottom-10 sm:bottom-2 left-2 text-xs bg-gray-500"
+          @click="changeScale"
+        >
+          Scale: {{ useRelativeScale ? "Relative" : "Total" }}
+        </button>
+        <chart class="rounded-sm" :options="options"></chart>
+      </div>
+      <div
+        v-else
+        class="text-sm text-center inset-0 text-black"
+        style="line-height: 400px"
+      >
+        <p class="animate-pulse">Loading...</p>
+      </div>
+    </transition>
   </div>
 </template>

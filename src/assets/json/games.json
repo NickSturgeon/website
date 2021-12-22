@@ -1,33 +1,50 @@
 [
   {
-    "slug": "oot",
+    "id": "oot",
     "title": "Ocarina of Time",
-    "links": {
-      "github": "https://www.github.com/zeldaret/oot"
-    },
-    "faq": "oot_faq",
-    "matching": "progress-oot-matching",
-    "nonmatching": "progress-oot-nonmatching",
-    "charts": [
+    "links": [
       {
-        "title": "Ocarina of Time MQ Debug Rom",
-        "subtitle": "Code decompilation progress",
-        "index": 3,
-        "series": [
+        "name": "Github",
+        "icon": "github",
+        "url": "https://www.github.com/zeldaret/oot"
+      }
+    ],
+    "faq": "oot_faq",
+    "progress": [
+      {
+        "name": "Code",
+        "title": "Code Decompilation Progress",
+        "data": [
           {
-            "metric": "Code",
-            "description": "{0} / {1} bytes of all code decompiled ({2}%)"
+            "name": "Non-Matching",
+            "csv": "progress-oot-nonmatching",
+            "defaultChartVisibility": true
           },
           {
-            "metric": "Code",
+            "name": "Matching",
+            "csv": "progress-oot-matching",
+            "defaultChartVisibility": true
+          }
+        ],
+        "total": {
+          "name": "Code",
+          "index": 3,
+          "description": "{0} / {1} bytes of all code decompiled ({2}%)"
+        },
+        "metrics": [
+          {
+            "name": "Code",
+            "index": 5,
             "description": "{0} / {1} bytes of code decompiled ({2}%)"
           },
           {
-            "metric": "Boot",
+            "name": "Boot",
+            "index": 7,
             "description": "{0} / {1} bytes of boot decompiled ({2}%)"
           },
           {
-            "metric": "Overlays",
+            "name": "Overlays",
+            "index": 9,
             "description": "{0} / {1} bytes of overlay decompiled ({2}%)"
           }
         ]
@@ -35,68 +52,165 @@
     ]
   },
   {
-    "slug": "mm",
+    "id": "mm",
     "title": "Majora's Mask",
-    "links": {
-      "github": "https://www.github.com/zeldaret/mm"
-    },
-    "faq": "mm_faq",
-    "matching": "progress-mm-matching",
-    "nonmatching": "progress-mm-nonmatching",
-    "charts": [
+    "links": [
       {
-        "title": "Majora's Mask",
-        "subtitle": "Code decompilation progress",
-        "index": 3,
-        "series": [
+        "name": "Github",
+        "icon": "github",
+        "url": "https://www.github.com/zeldaret/mm"
+      }
+    ],
+    "faq": "mm_faq",
+    "progress": [
+      {
+        "name": "Code",
+        "title": "Code Decompilation Progress",
+        "data": [
           {
-            "metric": "Code",
-            "description": "{0} / {1} bytes of all code decompiled ({2}%)"
+            "name": "Non-Matching",
+            "csv": "progress-mm-nonmatching",
+            "defaultChartVisibility": true
           },
           {
-            "metric": "Code",
+            "name": "Matching",
+            "csv": "progress-mm-matching",
+            "defaultChartVisibility": true
+          }
+        ],
+        "total": {
+          "name": "Code",
+          "index": 3,
+          "description": "{0} / {1} bytes of all code decompiled ({2}%)"
+        },
+        "metrics": [
+          {
+            "name": "Code",
+            "index": 7,
             "description": "{0} / {1} bytes of code decompiled ({2}%)"
           },
           {
-            "metric": "Boot",
+            "name": "Boot",
+            "index": 5,
             "description": "{0} / {1} bytes of boot decompiled ({2}%)"
           },
           {
-            "metric": "Overlays",
+            "name": "Overlays",
+            "index": 9,
             "description": "{0} / {1} bytes of overlay decompiled ({2}%)"
           }
         ]
       },
       {
-        "title": "Majora's Mask",
-        "subtitle": "Asset decompilation progress",
-        "index": 11,
-        "series": [
+        "name": "Assets",
+        "title": "Asset Analysis Progress",
+        "data": [
           {
-            "metric": "Assets",
-            "description": "{0} / {1} bytes of all assets decompiled ({2}%)"
+            "name": "Debinarised",
+            "csv": "progress-mm-nonmatching",
+            "defaultChartVisibility": false
           },
           {
-            "metric": "Audio",
-            "description": "{0} / {1} bytes of audio assets decompiled ({2}%)"
+            "name": "Identified",
+            "csv": "progress-mm-matching",
+            "defaultChartVisibility": true
+          }
+        ],
+        "total": {
+          "name": "Assets",
+          "index": 13,
+          "description": "{0} / {1} bytes of all assets ({2}%)"
+        },
+        "metrics": [
+          {
+            "name": "Archives",
+            "index": 15,
+            "description": "{0} / {1} bytes of archived assets ({2}%)"
           },
           {
-            "metric": "Miscellaneous",
-            "description": "{0} / {1} bytes of miscellaneous assets decompiled ({2}%)"
+            "name": "Audio",
+            "index": 17,
+            "description": "{0} / {1} bytes of audio assets ({2}%)"
           },
           {
-            "metric": "Object",
-            "description": "{0} / {1} bytes of object assets decompiled ({2}%)"
+            "name": "Interface",
+            "index": 19,
+            "description": "{0} / {1} bytes of interface-related assets ({2}%)"
           },
           {
-            "metric": "Scene",
-            "description": "{0} / {1} bytes of scene assets decompiled ({2}%)"
+            "name": "Miscellaneous",
+            "index": 21,
+            "description": "{0} / {1} bytes of miscellaneous assets ({2}%)"
           },
           {
-            "metric": "Textures",
-            "description": "{0} / {1} bytes of textures decompiled ({2}%)"
+            "name": "Objects",
+            "index": 23,
+            "description": "{0} / {1} bytes of object assets ({2}%)"
+          },
+          {
+            "name": "Scenes",
+            "index": 25,
+            "description": "{0} / {1} bytes of scene assets ({2}%)"
+          },
+          {
+            "name": "Text",
+            "index": 27,
+            "description": "{0} / {1} bytes of text assets ({2}%)"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "tmc",
+    "title": "The Minish Cap",
+    "links": [
+      {
+        "name": "Github",
+        "icon": "github",
+        "url": "https://www.github.com/zeldaret/tmc"
+      }
+    ],
+    "faq": "tmc_faq",
+    "progress": [
+      {
+        "name": "Code",
+        "title": "Code Decompilation Progress",
+        "data": [
+          {
+            "name": "Non-Matching",
+            "csv": "progress-tmc-nonmatching",
+            "defaultChartVisibility": true
+          },
+          {
+            "name": "Matching",
+            "csv": "progress-tmc-matching",
+            "defaultChartVisibility": true
+          }
+        ],
+        "total": {
+          "name": "Code",
+          "index": 3,
+          "description": "{0} / {1} bytes of all code decompiled ({2}%)"
+        },
+        "metrics": []
+      },
+      {
+        "name": "Assets",
+        "title": "Data Analysis Progress",
+        "data": [
+          {
+            "name": "Analyzed",
+            "csv": "progress-tmc-matching",
+            "defaultChartVisibility": true
+          }
+        ],
+        "total": {
+          "name": "Assets",
+          "index": 5,
+          "description": "{0} / {1} bytes of all data ({2}%)"
+        },
+        "metrics": []
       }
     ]
   }
