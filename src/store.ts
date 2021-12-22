@@ -1,6 +1,7 @@
 import { InjectionKey } from "vue";
 import { createStore, useStore as baseUseStore, Store } from "vuex";
 import { constants } from "./utilities/constants";
+import AsyncLock from "async-lock";
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
@@ -10,6 +11,8 @@ export interface State {
     data: string;
   }[];
 }
+
+const lock = new AsyncLock();
 
 const cacheTimeoutMs: number = 5 * 60 * 1000; // 5m
 
@@ -32,22 +35,21 @@ export const store = createStore<State>({
     },
   },
   actions: {
-    [GET_SET_CSV_CACHE]: async (context, key) => {
-      let cache = context.state.csvCache.find((c) => c.key === key);
-      let data = cache?.data;
+    [GET_SET_CSV_CACHE]: (context, key) => {
+      return lock.acquire(key, async () => {
+        let cache = context.state.csvCache.find((c) => c.key === key);
+        let data = cache?.data;
 
-      if (cache === undefined) {
-        data = await fetch(`${constants.resourceURL}/csv/${key}.csv`).then((res) => res.text());
-        cache = context.state.csvCache.find((c) => c.key === key);
         if (cache === undefined) {
+          data = await fetch(`${constants.resourceURL}/csv/${key}.csv`).then((res) => res.text());
+          cache = context.state.csvCache.find((c) => c.key === key);
+
           context.commit(ADD_CSV_CACHE, { key, data });
           setTimeout(() => context.commit(REMOVE_CSV_CACHE, key), cacheTimeoutMs);
-        } else {
-          data = cache.data;
         }
-      }
 
-      return data!;
+        return data!;
+      });
     },
   },
 });
