@@ -9,12 +9,14 @@ const router = useRouter();
 const route = useRoute();
 
 const id = shallowRef(route.params.id);
+let hash = route.hash;
 
 const game = shallowRef<Game>();
 // const img = shallowRef<string>();
 
 onBeforeRouteUpdate((to) => {
   id.value = to.params.id;
+  hash = to.hash;
 });
 
 watch(
@@ -25,7 +27,7 @@ watch(
 
     // img.value = new URL(`../assets/img/games/${id.value}.png`, import.meta.url).href;
 
-    scrollToHash(route.hash);
+    scrollToHash(hash);
   },
   { immediate: true }
 );
