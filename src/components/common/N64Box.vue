@@ -8,12 +8,12 @@ const props = defineProps<{
 
 <template>
   <section class="n64-box group box-border text-white relative">
-    <template v-if="!props.simple">
+    <template v-if="!simple">
       <header>
         <div
           class="box slot text-right pr-9 text-2xl relative font-semibold cursor-default text-slate-900 p-3 w-32"
         >
-          File {{ props.file }}
+          File {{ file }}
           <div
             class="file-select bg-file-glow shadow-file-glow opacity-0 group-hover:opacity-100 absolute inset-0 transition-opacity duration-300"
           ></div>
@@ -25,7 +25,7 @@ const props = defineProps<{
         <div
           class="box border-r-solid border-l-solid border-t-solid border-b-none p-3 w-auto h-10 flex-grow box-content text-2xl rounded-b-none"
         >
-          <div class="pl-6">{{ props.heading }}</div>
+          <div class="pl-6">{{ heading }}</div>
           <hr />
         </div>
       </header>

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Menu as MenuDropdown, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
-
 import games from "../../assets/json/games.json";
 </script>
 

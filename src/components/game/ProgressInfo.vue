@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowRef, watch } from "vue";
+import { ref, shallowRef, watch } from "vue";
 import { useStore } from "../../store";
 import { cacheCSV } from "../../utilities/helpers";
 
@@ -15,8 +15,8 @@ const props = defineProps<{
 const store = useStore();
 
 const lastUpdate = shallowRef<Date>();
-const total = shallowRef<Metric>();
-const metrics = shallowRef<Metric[]>([]);
+const total = ref<Metric>();
+const metrics = ref<Metric[]>([]);
 
 watch(
   props,
@@ -85,7 +85,7 @@ async function getLatestPoint(csv: string): Promise<string[]> {
     <thead>
       <tr>
         <th class="text-left underline w-1/2 md:w-3/5">{{ total?.name }}</th>
-        <template v-for="(name, i) of props.progress.data.map((d) => d.name)">
+        <template v-for="(name, i) of progress.data.map((d) => d.name)">
           <th
             class="text-right underline w-1/4 md:w-1/5"
             :class="
