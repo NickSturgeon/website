@@ -82,6 +82,10 @@
       @apply font-mono text-sm bg-black bg-opacity-60 text-white py-1 px-2 rounded-md whitespace-nowrap;
     }
 
+    :not(h1, h2, h3, h4, h5, h6) + p {
+      @apply mt-2;
+    }
+
     ol,
     ul {
       @apply pl-5;

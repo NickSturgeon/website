@@ -19,18 +19,18 @@ const total = ref<Metric>();
 const metrics = ref<Metric[]>([]);
 
 watch(
-  props,
-  async (props) => {
-    const csv = await getCSV(props.progress);
+  () => props.progress,
+  async () => {
+    const csv = await getCSV();
     await parseCSV(csv);
   },
   { immediate: true }
 );
 
-async function getCSV(progress: ProgressData): Promise<string[]> {
+async function getCSV(): Promise<string[]> {
   return cacheCSV(
     store,
-    progress.data.map((d) => d.csv)
+    props.progress.data.map((d) => d.csv)
   );
 }
 

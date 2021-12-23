@@ -26,7 +26,7 @@ let csv: string[] = [];
 let data: CustomPointOptionsObject[][] = [];
 
 watch(
-  props,
+  () => props.progress,
   async () => {
     options.value = undefined;
     useRelativeScale.value = true;
