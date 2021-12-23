@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Dialog as StatementDialogue, DialogTitle } from "@headlessui/vue";
+import { Dialog as StatementDialogue, DialogOverlay, DialogTitle } from "@headlessui/vue";
 import { XIcon } from "@heroicons/vue/outline";
 import games from "../assets/json/games.json";
 import md from "../assets/statement.md";
@@ -35,6 +35,10 @@ const viewStatement = ref(false);
     @close="viewStatement = false"
     class="fixed inset-x-0 inset-y-20 shadow-md w-full max-w-xl mx-auto z-10 overflow-y-auto p-8 bg-white rounded-md"
   >
+    <teleport :to="'body'">
+      <dialog-overlay class="fixed transform inset-0 bg-black opacity-50" />
+    </teleport>
+
     <div class="flex justify-between">
       <dialog-title as="h2" class="text-xl font-bold leading-6 text-gray-900">
         {{ statement?.frontmatter?.title ?? "Statement" }}
