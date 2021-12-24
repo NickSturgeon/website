@@ -15,9 +15,7 @@ const emit = defineEmits<{ (e: "update:modelValue", value: boolean): void }>();
 
 const statement = ref();
 
-function closeStatement() {
-  emit("update:modelValue", false);
-}
+const closeStatement = () => emit("update:modelValue", false);
 </script>
 
 <template>
@@ -53,7 +51,7 @@ function closeStatement() {
                 {{ statement?.frontmatter?.title ?? "Statement" }}
               </dialog-title>
               <button @click="closeStatement">
-                <x-icon class="w-6 h-6 text-red-500" />
+                <x-icon class="w-6 h-6 text-red-500 hover:bg-red-300 rounded" />
               </button>
             </div>
 

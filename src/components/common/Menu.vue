@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Menu as MenuDropdown, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { ChevronDownIcon } from "@heroicons/vue/solid";
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 import games from "../../assets/json/games.json";
 </script>
 
@@ -16,11 +16,12 @@ import games from "../../assets/json/games.json";
           />
           <span class="text-white align-middle text-2xl font-bold mr-12">ZeldaRET</span>
         </router-link>
+
         <menu-dropdown as="div" class="relative inline-block">
           <menu-button
-            class="inline-flex font-semibold items-center justify-center w-full text-white text-lg bg-slate-400 bg-opacity-10 hover:bg-opacity-20 rounded-md px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            class="inline-flex font-semibold items-center justify-center w-full text-white text-lg bg-slate-400 bg-opacity-10 hover:bg-opacity-20 rounded px-4 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
           >
-            Games
+            Menu
             <chevron-down-icon
               class="w-5 h-5 ml-2 -mr-1 mt-0.5 text-white"
               aria-hidden="true"
@@ -35,20 +36,56 @@ import games from "../../assets/json/games.json";
             leave-to-class="transform scale-95 opacity-0"
           >
             <menu-items
-              class="text-black p-1 mt-1 z-50 text-left w-48 absolute right-0 origin-top-right bg-white rounded-sm shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              class="text-black p-1 mt-1 z-50 text-left w-48 absolute right-0 origin-top-right bg-white rounded shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y"
             >
-              <template v-for="game in games">
-                <menu-item v-slot="{ active }">
-                  <router-link :to="`/games/${game.id}`" class="nav-link">
-                    <p
-                      class="font-semibold p-2"
-                      :class="active ? 'bg-purple text-white rounded-sm' : ''"
-                    >
-                      {{ game.title }}
-                    </p>
-                  </router-link>
-                </menu-item>
-              </template>
+              <div>
+                <p class="text-center font-bold p-2">Games</p>
+              </div>
+              <div>
+                <template v-for="game in games">
+                  <menu-item v-slot="{ active }">
+                    <router-link :to="`/games/${game.id}`" class="nav-link">
+                      <p
+                        class="font-semibold p-2"
+                        :class="active ? 'bg-purple text-white rounded' : ''"
+                      >
+                        <chevron-right-icon
+                          class="inline align-center mb-1 w-5 h-5"
+                        />&nbsp;{{ game.title }}
+                      </p>
+                    </router-link>
+                  </menu-item>
+                </template>
+              </div>
+              <div>
+                <p class="text-center font-bold p-2">Links</p>
+              </div>
+              <div>
+                <a class="nav-link" href="https://discord.zelda64.dev" target="_blank">
+                  <p
+                    class="font-semibold p-2 group hover:text-white hover:bg-purple rounded"
+                  >
+                    <img
+                      class="w-5 inline invert group-hover:invert-0"
+                      src="../../assets/img/icons/discord.png"
+                      alt="Discord"
+                    />
+                    &nbsp;Discord
+                  </p>
+                </a>
+                <a class="nav-link" href="https://github.com/zeldaret" target="_blank">
+                  <p
+                    class="font-semibold p-2 group hover:text-white hover:bg-purple rounded"
+                  >
+                    <img
+                      class="w-5 inline invert group-hover:invert-0"
+                      src="../../assets/img/icons/github.png"
+                      alt="GitHub"
+                    />
+                    &nbsp;GitHub
+                  </p>
+                </a>
+              </div>
             </menu-items>
           </transition>
         </menu-dropdown>

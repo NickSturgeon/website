@@ -168,7 +168,7 @@ async function getOptions(): Promise<Options> {
       leave-active-class="transition-opacity duration-200 ease"
       leave-to-class="opacity-0"
     >
-      <div v-if="options" class="rounded-sm absolute inset-0">
+      <div v-if="options" class="rounded absolute inset-0">
         <button
           v-if="showScaleButton"
           class="rounded-sm py-1 px-2 z-40 text-white absolute bottom-10 sm:bottom-2 left-2 text-xs bg-gray-500"
@@ -176,7 +176,7 @@ async function getOptions(): Promise<Options> {
         >
           Scale: {{ useRelativeScale ? "Relative" : "Total" }}
         </button>
-        <chart class="rounded-sm" :options="options"></chart>
+        <chart class="rounded" :options="options"></chart>
       </div>
       <div
         v-else
